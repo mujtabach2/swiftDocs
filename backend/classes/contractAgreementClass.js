@@ -1,18 +1,27 @@
-
 class ContractAgreement {
-    constructor(clientName, yourCompanyName, date, services, term, compensation, confidentiality, termination, governingLaw) {
-        this.clientName = clientName;
-        this.yourCompanyName = yourCompanyName;
-        this.date = date;
-        this.services = services;
-        this.term = term;
-        this.compensation = compensation;
-        this.confidentiality = confidentiality;
-        this.termination = termination;
-        this.governingLaw = governingLaw;
-    }
-    
-    latex = `\\documentclass[a4paper,12pt]{article}
+  constructor(
+    clientName,
+    yourCompanyName,
+    date,
+    services,
+    term,
+    compensation,
+    confidentiality,
+    termination,
+    governingLaw,
+  ) {
+    this.clientName = clientName;
+    this.yourCompanyName = yourCompanyName;
+    this.date = date;
+    this.services = services;
+    this.term = term;
+    this.compensation = compensation;
+    this.confidentiality = confidentiality;
+    this.termination = termination;
+    this.governingLaw = governingLaw;
+  }
+
+  latex = `\\documentclass[a4paper,12pt]{article}
     \\usepackage[left=2.5cm,right=2.5cm,top=2.5cm,bottom=2.5cm]{geometry}
     \\usepackage{graphicx}
     \\usepackage{amsmath}
@@ -128,8 +137,7 @@ class ContractAgreement {
 
     \\end{document}`;
 
-
-    generateContractAgreementHtml() {
-       // to be implemented
-    }
+  generateContractAgreementHtml() {
+    // to be implemented
+  }
 }

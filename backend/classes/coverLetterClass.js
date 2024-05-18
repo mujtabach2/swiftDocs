@@ -1,32 +1,57 @@
 class CoverLetter {
-    constructor(senderName, senderAddress, senderCity, senderState, senderZIP, senderPhone, senderEmail, recipientName, recipientPosition, companyName, companyAddress1, companyAddress2, city, state, zip, jobTitle, whereFoundJobPosting, degree, university, yearsOfExperience, previousCompany, relevantSkills, specificExample, companyAttraction) {
-        this.senderName = senderName;
-        this.senderAddress = senderAddress;
-        this.senderCity = senderCity;
-        this.senderState = senderState;
-        this.senderZIP = senderZIP;
-        this.senderPhone = senderPhone;
-        this.senderEmail = senderEmail;
-        this.recipientName = recipientName;
-        this.recipientPosition = recipientPosition;
-        this.companyName = companyName;
-        this.companyAddress1 = companyAddress1;
-        this.companyAddress2 = companyAddress2;
-        this.city = city;
-        this.state = state;
-        this.zip = zip;
-        this.jobTitle = jobTitle;
-        this.whereFoundJobPosting = whereFoundJobPosting;
-        this.degree = degree;
-        this.university = university;
-        this.yearsOfExperience = yearsOfExperience;
-        this.previousCompany = previousCompany;
-        this.relevantSkills = relevantSkills;
-        this.specificExample = specificExample;
-        this.companyAttraction = companyAttraction;
-    }
+  constructor(
+    senderName,
+    senderAddress,
+    senderCity,
+    senderState,
+    senderZIP,
+    senderPhone,
+    senderEmail,
+    recipientName,
+    recipientPosition,
+    companyName,
+    companyAddress1,
+    companyAddress2,
+    city,
+    state,
+    zip,
+    jobTitle,
+    whereFoundJobPosting,
+    degree,
+    university,
+    yearsOfExperience,
+    previousCompany,
+    relevantSkills,
+    specificExample,
+    companyAttraction,
+  ) {
+    this.senderName = senderName;
+    this.senderAddress = senderAddress;
+    this.senderCity = senderCity;
+    this.senderState = senderState;
+    this.senderZIP = senderZIP;
+    this.senderPhone = senderPhone;
+    this.senderEmail = senderEmail;
+    this.recipientName = recipientName;
+    this.recipientPosition = recipientPosition;
+    this.companyName = companyName;
+    this.companyAddress1 = companyAddress1;
+    this.companyAddress2 = companyAddress2;
+    this.city = city;
+    this.state = state;
+    this.zip = zip;
+    this.jobTitle = jobTitle;
+    this.whereFoundJobPosting = whereFoundJobPosting;
+    this.degree = degree;
+    this.university = university;
+    this.yearsOfExperience = yearsOfExperience;
+    this.previousCompany = previousCompany;
+    this.relevantSkills = relevantSkills;
+    this.specificExample = specificExample;
+    this.companyAttraction = companyAttraction;
+  }
 
-    latex = `\\documentclass[a4paper,10pt]{article}
+  latex = `\\documentclass[a4paper,10pt]{article}
     \\usepackage[left=2.5cm,right=2.5cm,top=2.5cm,bottom=2.5cm]{geometry}
     \\usepackage{graphicx}
     \\usepackage{amsmath}
@@ -94,7 +119,7 @@ class CoverLetter {
     
     \\end{document}`;
 
-    generateCoverLetterHtml() {
-     // to be implemented
-    }
+  generateCoverLetterHtml() {
+    // to be implemented
+  }
 }

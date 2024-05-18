@@ -1,18 +1,29 @@
 class BusinessProposal {
-    constructor(proposalTitle, clientName, clientCompany, yourName, yourCompany, yourEmail, date, milestones, resources, budget) {
-        this.proposalTitle = proposalTitle;
-        this.clientName = clientName;
-        this.clientCompany = clientCompany;
-        this.yourName = yourName;
-        this.yourCompany = yourCompany;
-        this.yourEmail = yourEmail;
-        this.date = date;
-        this.milestones = milestones;
-        this.resources = resources;
-        this.budget = budget;
-    }
+  constructor(
+    proposalTitle,
+    clientName,
+    clientCompany,
+    yourName,
+    yourCompany,
+    yourEmail,
+    date,
+    milestones,
+    resources,
+    budget,
+  ) {
+    this.proposalTitle = proposalTitle;
+    this.clientName = clientName;
+    this.clientCompany = clientCompany;
+    this.yourName = yourName;
+    this.yourCompany = yourCompany;
+    this.yourEmail = yourEmail;
+    this.date = date;
+    this.milestones = milestones;
+    this.resources = resources;
+    this.budget = budget;
+  }
 
-    latex = `\\documentclass[a4paper,12pt]{article}
+  latex = `\\documentclass[a4paper,12pt]{article}
     \\usepackage[left=2.5cm,right=2.5cm,top=2.5cm,bottom=2.5cm]{geometry}
     \\usepackage{graphicx}
     \\usepackage{amsmath}
@@ -140,7 +151,7 @@ class BusinessProposal {
     
     \\end{document}`;
 
-    generateBusinessProposalHtml() {
-     // to be implemented
-    }
+  generateBusinessProposalHtml() {
+    // to be implemented
+  }
 }

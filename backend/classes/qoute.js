@@ -1,14 +1,21 @@
 class Quote {
-    constructor(senderInfo, recipientInfo, quoteNumber, quoteDate, validityDate, items) {
-        this.senderInfo = senderInfo;
-        this.recipientInfo = recipientInfo;
-        this.quoteNumber = quoteNumber;
-        this.quoteDate = quoteDate;
-        this.validityDate = validityDate;
-        this.items = items;
-    }
+  constructor(
+    senderInfo,
+    recipientInfo,
+    quoteNumber,
+    quoteDate,
+    validityDate,
+    items,
+  ) {
+    this.senderInfo = senderInfo;
+    this.recipientInfo = recipientInfo;
+    this.quoteNumber = quoteNumber;
+    this.quoteDate = quoteDate;
+    this.validityDate = validityDate;
+    this.items = items;
+  }
 
-    latex = `\\documentclass[a4paper,10pt]{article}
+  latex = `\\documentclass[a4paper,10pt]{article}
     \\usepackage[left=2cm,right=2cm,top=2cm,bottom=2cm]{geometry}
     \\usepackage{graphicx}
     \\usepackage{amsmath}
@@ -68,7 +75,7 @@ class Quote {
         \\hline
         \\textbf{Description} & \\textbf{Quantity} & \\textbf{Unit Price} & \\textbf{Total} \\\\
         \\hline
-        ${this.items.map(item => `${item.description} & ${item.quantity} & ${item.unitPrice} & ${item.total} \\\\ \\hline`).join('\n')}
+        ${this.items.map((item) => `${item.description} & ${item.quantity} & ${item.unitPrice} & ${item.total} \\\\ \\hline`).join("\n")}
         \\multicolumn{3}{|l|}{\\textbf{Subtotal}} & ${this.getTotalAmount()} \\\\
         \\hline
         \\multicolumn{3}{|l|}{\\textbf{Tax (10\\%)}} & \\\\
@@ -106,11 +113,11 @@ class Quote {
     
     \\end{document}`;
 
-    generateQouteHtml() {
-     // to be implemented
-    }
+  generateQouteHtml() {
+    // to be implemented
+  }
 
-    getTotalAmount() {
-        return this.items.reduce((total, item) => total + item.total, 0);
-    }
+  getTotalAmount() {
+    return this.items.reduce((total, item) => total + item.total, 0);
+  }
 }

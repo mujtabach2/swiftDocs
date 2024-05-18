@@ -1,12 +1,12 @@
 class Invoice {
-    constructor(clientName, invoiceDate, dueDate, items) {
-        this.clientName = clientName;
-        this.invoiceDate = invoiceDate;
-        this.dueDate = dueDate;
-        this.items = items;
-    }
+  constructor(clientName, invoiceDate, dueDate, items) {
+    this.clientName = clientName;
+    this.invoiceDate = invoiceDate;
+    this.dueDate = dueDate;
+    this.items = items;
+  }
 
-    latex = `
+  latex = `
     \\documentclass[a4paper,10pt]{article}
     \\usepackage[left=2cm,right=2cm,top=2cm,bottom=2cm]{geometry}
     \\usepackage{graphicx}
@@ -76,7 +76,7 @@ class Invoice {
         \\hline
         \\textbf{Description} & \\textbf{Quantity} & \\textbf{Unit Price} & \\textbf{Total} \\\\
         \\hline
-        ${this.items.map(item => `${item.description} & ${item.quantity} & \$${item.price.toFixed(2)} & \$${(item.quantity * item.price).toFixed(2)} \\\\ \\hline`).join('\n')}
+        ${this.items.map((item) => `${item.description} & ${item.quantity} & \$${item.price.toFixed(2)} & \$${(item.quantity * item.price).toFixed(2)} \\\\ \\hline`).join("\n")}
         \\textbf{Subtotal} & & & \$${this.getTotalAmount().toFixed(2)} \\\\
         \\hline
         \\textbf{Tax (10\\%)} & & & \$${(this.getTotalAmount() * 0.1).toFixed(2)} \\\\
@@ -118,17 +118,17 @@ class Invoice {
     
     \\end{document}
     `;
-    
-    getTotalAmount() {
-        // Calculate total amount based on items
-        let total = 0;
-        for (const item of this.items) {
-            total += item.quantity * item.price;
-        }
-        return total;
-    }
 
-    generateInvoiceHtml() {
-     // to be implemented
+  getTotalAmount() {
+    // Calculate total amount based on items
+    let total = 0;
+    for (const item of this.items) {
+      total += item.quantity * item.price;
     }
+    return total;
+  }
+
+  generateInvoiceHtml() {
+    // to be implemented
+  }
 }
