@@ -1,29 +1,55 @@
 class CoverLetter {
+  senderName: string;
+  senderAddress: string;
+  senderCity: string;
+  senderState: string;
+  senderZIP: string;
+  senderPhone: string;
+  senderEmail: string;
+  recipientName: string;
+  recipientPosition: string;
+  companyName: string;
+  companyAddress1: string;
+  companyAddress2: string;
+  city: string;
+  state: string;
+  zip: string;
+  jobTitle: string;
+  whereFoundJobPosting: string;
+  degree: string;
+  university: string;
+  yearsOfExperience: string;
+  previousCompany: string;
+  relevantSkills: string;
+  specificExample: string;
+  companyAttraction: string;
+  latex: string;
+
   constructor(
-    senderName,
-    senderAddress,
-    senderCity,
-    senderState,
-    senderZIP,
-    senderPhone,
-    senderEmail,
-    recipientName,
-    recipientPosition,
-    companyName,
-    companyAddress1,
-    companyAddress2,
-    city,
-    state,
-    zip,
-    jobTitle,
-    whereFoundJobPosting,
-    degree,
-    university,
-    yearsOfExperience,
-    previousCompany,
-    relevantSkills,
-    specificExample,
-    companyAttraction,
+    senderName: string,
+    senderAddress: string,
+    senderCity: string,
+    senderState: string,
+    senderZIP: string,
+    senderPhone: string,
+    senderEmail: string,
+    recipientName: string,
+    recipientPosition: string,
+    companyName: string,
+    companyAddress1: string,
+    companyAddress2: string,
+    city: string,
+    state: string,
+    zip: string,
+    jobTitle: string,
+    whereFoundJobPosting: string,
+    degree: string,
+    university: string,
+    yearsOfExperience: string,
+    previousCompany: string,
+    relevantSkills: string,
+    specificExample: string,
+    companyAttraction: string,
   ) {
     this.senderName = senderName;
     this.senderAddress = senderAddress;
@@ -49,9 +75,8 @@ class CoverLetter {
     this.relevantSkills = relevantSkills;
     this.specificExample = specificExample;
     this.companyAttraction = companyAttraction;
-  }
 
-  latex = `\\documentclass[a4paper,10pt]{article}
+    this.latex = `\\documentclass[a4paper,10pt]{article}
     \\usepackage[left=2.5cm,right=2.5cm,top=2.5cm,bottom=2.5cm]{geometry}
     \\usepackage{graphicx}
     \\usepackage{amsmath}
@@ -118,6 +143,7 @@ class CoverLetter {
     ${this.senderName}
     
     \\end{document}`;
+  }
 
   generateCoverLetterHtml() {
     // to be implemented

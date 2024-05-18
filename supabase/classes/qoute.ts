@@ -1,13 +1,38 @@
-class Invoice {
-  constructor(clientName, invoiceDate, dueDate, items) {
-    this.clientName = clientName;
-    this.invoiceDate = invoiceDate;
-    this.dueDate = dueDate;
-    this.items = items;
-  }
+class Quote {
+  senderInfo: string;
+  recipientInfo: string;
+  quoteNumber: string;
+  quoteDate: string;
+  validityDate: string;
+  items: {
+    description: string;
+    quantity: number;
+    unitPrice: number;
+    total: number;
+  }[];
+  latex: string;
 
-  latex = `
-    \\documentclass[a4paper,10pt]{article}
+  constructor(
+    senderInfo: string,
+    recipientInfo: string,
+    quoteNumber: string,
+    quoteDate: string,
+    validityDate: string,
+    items: {
+      description: string;
+      quantity: number;
+      unitPrice: number;
+      total: number;
+    }[],
+  ) {
+    this.senderInfo = senderInfo;
+    this.recipientInfo = recipientInfo;
+    this.quoteNumber = quoteNumber;
+    this.quoteDate = quoteDate;
+    this.validityDate = validityDate;
+    this.items = items;
+
+    this.latex = `\\documentclass[a4paper,10pt]{article}
     \\usepackage[left=2cm,right=2cm,top=2cm,bottom=2cm]{geometry}
     \\usepackage{graphicx}
     \\usepackage{amsmath}
@@ -20,16 +45,16 @@ class Invoice {
     \\pagestyle{fancy}
     \\fancyhf{}
     \\fancyhead[L]{\\includegraphics[width=3cm]{your_logo.png}}
-    \\fancyhead[R]{Invoice}
+    \\fancyhead[R]{Cover Letter}
     \\fancyfoot[L]{\\small Your Company Name}
     \\fancyfoot[C]{\\small \\thepage\\ of \\pageref{LastPage}}
     \\fancyfoot[R]{\\small \\href{mailto:your.email@example.com}{your.email@example.com}}
     
     \\begin{document}
     
-    % Invoice title and date
+    % Cover Letter title and date
     \\begin{center}
-        \\LARGE \\textbf{Invoice}
+        \\LARGE \\textbf{Cover Letter}
     \\end{center}
     
     \\vspace{0.5cm}
@@ -38,11 +63,7 @@ class Invoice {
     \\noindent
     \\begin{tabular}{@{}p{0.5\\textwidth}@{}}
         \\textbf{From:} \\\\
-        Your Company Name \\\\
-        Your Company Address \\\\
-        City, State, ZIP Code \\\\
-        Phone: (123) 456-7890 \\\\
-        Email: your.email@example.com \\\\
+        ${this.senderInfo} \\\\
     \\end{tabular}
     
     \\vspace{1cm}
@@ -51,22 +72,17 @@ class Invoice {
     \\noindent
     \\begin{tabular}{@{}p{0.5\\textwidth}@{}}
         \\textbf{To:} \\\\
-        ${this.clientName} \\\\
-        Client's Company \\\\
-        Client's Address \\\\
-        City, State, ZIP Code \\\\
-        Phone: (098) 765-4321 \\\\
-        Email: client.email@example.com \\\\
+        ${this.recipientInfo} \\\\
     \\end{tabular}
     
     \\vspace{1cm}
     
-    % Invoice Information
+    % Quote Information
     \\noindent
     \\begin{tabular}{@{}p{0.5\\textwidth}@{}p{0.5\\textwidth}@{}}
-        \\textbf{Invoice Number:} & INV-001 \\\\
-        \\textbf{Invoice Date:} & ${this.invoiceDate} \\\\
-        \\textbf{Due Date:} & ${this.dueDate} \\\\
+        \\textbf{Quote Number:} & ${this.quoteNumber} \\\\
+        \\textbf{Quote Date:} & ${this.quoteDate} \\\\
+        \\textbf{Valid Until:} & ${this.validityDate} \\\\
     \\end{tabular}
     
     \\vspace{1cm}
@@ -76,32 +92,28 @@ class Invoice {
         \\hline
         \\textbf{Description} & \\textbf{Quantity} & \\textbf{Unit Price} & \\textbf{Total} \\\\
         \\hline
-        ${this.items.map((item) => `${item.description} & ${item.quantity} & \$${item.price.toFixed(2)} & \$${(item.quantity * item.price).toFixed(2)} \\\\ \\hline`).join("\n")}
-        \\textbf{Subtotal} & & & \$${this.getTotalAmount().toFixed(2)} \\\\
+        ${this.items.map((item) => `${item.description} & ${item.quantity} & ${item.unitPrice} & ${item.total} \\\\ \\hline`).join("\n")}
+        \\multicolumn{3}{|l|}{\\textbf{Subtotal}} & ${this.getTotalAmount()} \\\\
         \\hline
-        \\textbf{Tax (10\\%)} & & & \$${(this.getTotalAmount() * 0.1).toFixed(2)} \\\\
+        \\multicolumn{3}{|l|}{\\textbf{Tax (10\\%)}} & \\\\
         \\hline
-        \\textbf{Total} & & & \$${(this.getTotalAmount() * 1.1).toFixed(2)} \\\\
+        \\multicolumn{3}{|l|}{\\textbf{Total}} & \\\\
         \\hline
     \\end{tabular}
     
     \\vspace{1cm}
     
-    % Payment Instructions
+    % Terms and Conditions
     \\noindent
-    \\textbf{Payment Instructions:} \\\\
-    Please make the payment to the following account: \\\\
-    Bank: Your Bank Name \\\\
-    Account Number: 123456789 \\\\
-    Routing Number: 987654321 \\\\
-    Or via PayPal to: paypal@example.com
+    \\textbf{Terms and Conditions:} \\\\
+    Please note that this cover letter is provided for informational purposes only. Any contractual agreements should be detailed in a separate document.
     
     \\vspace{1cm}
     
     % Footer with Additional Notes
     \\noindent
     \\textbf{Additional Notes:} \\\\
-    Thank you for your business! If you have any questions about this invoice, please contact us at your.email@example.com.
+    Thank you for considering our services! If you have any questions or need further information, please contact us at your.email@example.com.
     
     \\vfill
     
@@ -116,19 +128,14 @@ class Invoice {
         Website: \\href{https://www.yourwebsite.com}{www.yourwebsite.com}
     \\end{center}
     
-    \\end{document}
-    `;
-
-  getTotalAmount() {
-    // Calculate total amount based on items
-    let total = 0;
-    for (const item of this.items) {
-      total += item.quantity * item.price;
-    }
-    return total;
+    \\end{document}`;
   }
 
-  generateInvoiceHtml() {
+  getTotalAmount() {
+    return this.items.reduce((total, item) => total + item.total, 0);
+  }
+
+  generateQouteHtml() {
     // to be implemented
   }
 }

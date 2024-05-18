@@ -1,0 +1,7 @@
+{
+  "imports": {
+    "https://deno.land/x/langchain@v0.11.0": "./langchain",
+    "https://deno.land/x/@langchain/core@v0.10.1": "./@langchain/core",
+    "https://deno.land/x/@langchain/openai@v0.8.0": "./@langchain/openai"
+  }
+}
