@@ -2,7 +2,8 @@
 // Import necessary modules
 import { Auth } from "@supabase/auth-ui-react";
 import supabase from "../config/supabaseClient";
-IMPORL;
+import logo from "./logo.png";
+import Image from "next/image";
 
 const customTheme = {
   default: {
@@ -26,10 +27,12 @@ export default function Login() {
     >
       <div className="w-full max-w-md rounded-lg bg-gray-800 shadow-md p-8">
         <div className="flex flex-col justify-content-left ">
-          <div className="flex flex-row gap-5">
-            <img src={"./logo.png"} className="h-[34px] " />
-            <h1 className="text-4xl font-bold text-white ">SwiftDocs</h1>
-          </div>
+          <a href="/">
+            <div className="flex flex-row gap-1 items-center">
+              <Image src={logo} className="h-[50px] w-auto pb-2 pr-[-2vw]" />
+              <h1 className="text-4xl font-bold text-white ">SwiftDocs</h1>
+            </div>
+          </a>
 
           <p className="text-white ">Sign in to access your account</p>
         </div>

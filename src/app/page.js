@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import Main from "./components/main";
 import Pricing from "./components/pricing";
 import Footer from "./components/footer";
+import Features from "./components/features";
 
 export default function Home() {
   console.log(supabase);
@@ -22,11 +23,19 @@ export default function Home() {
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24 ">
-      <Navbar handleThemeChange={toggleTheme} theme={theme} />
+      <section id="main">
+        <Navbar handleThemeChange={toggleTheme} theme={theme} />
+      </section>
       <Main />
-      <Pricing theme={theme} />
+
+      <Features />
+
+      <section id="pricing">
+        <Pricing theme={theme} />
+      </section>
 
       {/*button to login [age ] */}
+
       <Footer />
     </main>
   );
