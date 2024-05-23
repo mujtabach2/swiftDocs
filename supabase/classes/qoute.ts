@@ -12,25 +12,13 @@ class Quote {
   }[];
   latex: string;
 
-  constructor(
-    senderInfo: string,
-    recipientInfo: string,
-    quoteNumber: string,
-    quoteDate: string,
-    validityDate: string,
-    items: {
-      description: string;
-      quantity: number;
-      unitPrice: number;
-      total: number;
-    }[],
-  ) {
-    this.senderInfo = senderInfo;
-    this.recipientInfo = recipientInfo;
-    this.quoteNumber = quoteNumber;
-    this.quoteDate = quoteDate;
-    this.validityDate = validityDate;
-    this.items = items;
+  constructor(detail: Array<string>) {
+    this.senderInfo = detail[0];
+    this.recipientInfo = detail[1];
+    this.quoteNumber = detail[2];
+    this.quoteDate = detail[3];
+    this.validityDate = detail[4];
+    this.items = JSON.parse(detail[5]);
 
     this.latex = `\\documentclass[a4paper,10pt]{article}
     \\usepackage[left=2cm,right=2cm,top=2cm,bottom=2cm]{geometry}
@@ -139,3 +127,5 @@ class Quote {
     // to be implemented
   }
 }
+
+export default Quote;

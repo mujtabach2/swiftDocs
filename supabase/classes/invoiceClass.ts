@@ -5,16 +5,11 @@ class Invoice {
   items: { description: string; quantity: number; price: number }[];
   latex: string;
 
-  constructor(
-    clientName: string,
-    invoiceDate: string,
-    dueDate: string,
-    items: { description: string; quantity: number; price: number }[],
-  ) {
-    this.clientName = clientName;
-    this.invoiceDate = invoiceDate;
-    this.dueDate = dueDate;
-    this.items = items;
+  constructor(detail: Array<string>) {
+    this.clientName = detail[0];
+    this.invoiceDate = detail[1];
+    this.dueDate = detail[2];
+    this.items = JSON.parse(detail[3]);
 
     this.latex = `
     \\documentclass[a4paper,10pt]{article}
@@ -143,3 +138,5 @@ class Invoice {
     // to be implemented
   }
 }
+
+export default Invoice;

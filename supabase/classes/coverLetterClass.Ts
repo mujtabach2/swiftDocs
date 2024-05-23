@@ -25,56 +25,31 @@ class CoverLetter {
   companyAttraction: string;
   latex: string;
 
-  constructor(
-    senderName: string,
-    senderAddress: string,
-    senderCity: string,
-    senderState: string,
-    senderZIP: string,
-    senderPhone: string,
-    senderEmail: string,
-    recipientName: string,
-    recipientPosition: string,
-    companyName: string,
-    companyAddress1: string,
-    companyAddress2: string,
-    city: string,
-    state: string,
-    zip: string,
-    jobTitle: string,
-    whereFoundJobPosting: string,
-    degree: string,
-    university: string,
-    yearsOfExperience: string,
-    previousCompany: string,
-    relevantSkills: string,
-    specificExample: string,
-    companyAttraction: string,
-  ) {
-    this.senderName = senderName;
-    this.senderAddress = senderAddress;
-    this.senderCity = senderCity;
-    this.senderState = senderState;
-    this.senderZIP = senderZIP;
-    this.senderPhone = senderPhone;
-    this.senderEmail = senderEmail;
-    this.recipientName = recipientName;
-    this.recipientPosition = recipientPosition;
-    this.companyName = companyName;
-    this.companyAddress1 = companyAddress1;
-    this.companyAddress2 = companyAddress2;
-    this.city = city;
-    this.state = state;
-    this.zip = zip;
-    this.jobTitle = jobTitle;
-    this.whereFoundJobPosting = whereFoundJobPosting;
-    this.degree = degree;
-    this.university = university;
-    this.yearsOfExperience = yearsOfExperience;
-    this.previousCompany = previousCompany;
-    this.relevantSkills = relevantSkills;
-    this.specificExample = specificExample;
-    this.companyAttraction = companyAttraction;
+  constructor(detail: Array<string>) {
+    this.senderName = detail[0];
+    this.senderAddress = detail[1];
+    this.senderCity = detail[2];
+    this.senderState = detail[3];
+    this.senderZIP = detail[4];
+    this.senderPhone = detail[5];
+    this.senderEmail = detail[6];
+    this.recipientName = detail[7];
+    this.recipientPosition = detail[8];
+    this.companyName = detail[9];
+    this.companyAddress1 = detail[10];
+    this.companyAddress2 = detail[11];
+    this.city = detail[12];
+    this.state = detail[13];
+    this.zip = detail[14];
+    this.jobTitle = detail[15];
+    this.whereFoundJobPosting = detail[16];
+    this.degree = detail[17];
+    this.university = detail[18];
+    this.yearsOfExperience = detail[19];
+    this.previousCompany = detail[20];
+    this.relevantSkills = detail[21];
+    this.specificExample = detail[22];
+    this.companyAttraction = detail[23];
 
     this.latex = `\\documentclass[a4paper,10pt]{article}
     \\usepackage[left=2.5cm,right=2.5cm,top=2.5cm,bottom=2.5cm]{geometry}
@@ -149,3 +124,5 @@ class CoverLetter {
     // to be implemented
   }
 }
+
+export default CoverLetter;

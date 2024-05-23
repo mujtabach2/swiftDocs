@@ -1,3 +1,5 @@
+const { isWhiteSpaceLike } = require("typescript");
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
@@ -14,5 +16,22 @@ module.exports = {
       },
     },
   },
-  plugins: [],
+
+  daisyui: {
+    themes: [
+      {
+        mytheme: {
+          primary: "#fff",
+          secondary: "#333",
+          accent: "#37cdbe",
+          neutral: "#3d4451",
+          "base-100": "#ffffff",
+          "gray-800": "#9CA3AF",
+        },
+      },
+      "dark",
+      "cupcake",
+    ],
+  },
+  plugins: [require("daisyui")],
 };

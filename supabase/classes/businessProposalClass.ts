@@ -11,28 +11,17 @@ class BusinessProposal {
   budget: string;
   latex: string;
 
-  constructor(
-    proposalTitle: string,
-    clientName: string,
-    clientCompany: string,
-    yourName: string,
-    yourCompany: string,
-    yourEmail: string,
-    date: string,
-    milestones: string,
-    resources: string,
-    budget: string,
-  ) {
-    this.proposalTitle = proposalTitle;
-    this.clientName = clientName;
-    this.clientCompany = clientCompany;
-    this.yourName = yourName;
-    this.yourCompany = yourCompany;
-    this.yourEmail = yourEmail;
-    this.date = date;
-    this.milestones = milestones;
-    this.resources = resources;
-    this.budget = budget;
+  constructor(detail: Array<string>) {
+    this.proposalTitle = detail[0];
+    this.clientName = detail[1];
+    this.clientCompany = detail[2];
+    this.yourName = detail[3];
+    this.yourCompany = detail[4];
+    this.yourEmail = detail[5];
+    this.date = detail[6];
+    this.milestones = detail[7];
+    this.resources = detail[8];
+    this.budget = detail[9];
 
     this.latex = `\\documentclass[a4paper,12pt]{article}
     \\usepackage[left=2.5cm,right=2.5cm,top=2.5cm,bottom=2.5cm]{geometry}
@@ -167,3 +156,5 @@ class BusinessProposal {
     // to be implemented
   }
 }
+
+export default BusinessProposal;

@@ -10,26 +10,16 @@ class ContractAgreement {
   governingLaw: string;
   latex: string;
 
-  constructor(
-    clientName: string,
-    yourCompanyName: string,
-    date: string,
-    services: string,
-    term: string,
-    compensation: string,
-    confidentiality: string,
-    termination: string,
-    governingLaw: string,
-  ) {
-    this.clientName = clientName;
-    this.yourCompanyName = yourCompanyName;
-    this.date = date;
-    this.services = services;
-    this.term = term;
-    this.compensation = compensation;
-    this.confidentiality = confidentiality;
-    this.termination = termination;
-    this.governingLaw = governingLaw;
+  constructor(detail: Array<string>) {
+    this.clientName = detail[0];
+    this.yourCompanyName = detail[1];
+    this.date = detail[2];
+    this.services = detail[3];
+    this.term = detail[4];
+    this.compensation = detail[5];
+    this.confidentiality = detail[6];
+    this.termination = detail[7];
+    this.governingLaw = detail[8];
 
     this.latex = `\\documentclass[a4paper,12pt]{article}
     \\usepackage[left=2.5cm,right=2.5cm,top=2.5cm,bottom=2.5cm]{geometry}
@@ -151,3 +141,5 @@ class ContractAgreement {
     // to be implemented
   }
 }
+
+export default ContractAgreement;
