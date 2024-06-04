@@ -2,8 +2,15 @@
 // Import necessary modules
 import { Auth } from "@supabase/auth-ui-react";
 import supabase from "../config/supabaseClient";
-import logo from "./logo.png";
+import logo from "../logo.png";
 import Image from "next/image";
+
+const metadata = {
+  title: "Login",
+  description: "Login to access your account",
+
+}
+ 
 
 const customTheme = {
   default: {

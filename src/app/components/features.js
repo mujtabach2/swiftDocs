@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
-import logo from "../login/logo.png";
+import logo from "../logo.png"; 
 
 export default function Features() {
   const [selectedAnime, setSelectedAnime] = useState("Quotes");

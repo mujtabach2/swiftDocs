@@ -1,4 +1,4 @@
-import logo from "../login/logo.png";
+import logo from "../logo.png";
 import Image from "next/image";
 
 export default function Navbar({ handleThemeChange, theme }) {

@@ -7,6 +7,7 @@ import ContractAgreement from "../../classes/contractAgreementClass";
 import Invoice from "../../classes/invoiceClass";
 
 const app = express();
+
 app.use(express.json());
 
 app.post("/set-document", async (req, res) => {

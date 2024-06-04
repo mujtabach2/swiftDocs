@@ -7,6 +7,7 @@ import Pricing from "./components/pricing";
 import Footer from "./components/footer";
 import Features from "./components/features";
 
+
 export default function Home() {
   console.log(supabase);
   const [theme, setTheme] = useState("synthwave");
@@ -22,10 +23,12 @@ export default function Home() {
   };
 
   return (
+    <>
     <main className="flex min-h-screen flex-col items-center justify-between p-24 ">
       <section id="main">
         <Navbar handleThemeChange={toggleTheme} theme={theme} />
       </section>
+      
       <Main />
 
       <Features />
@@ -38,5 +41,6 @@ export default function Home() {
 
       <Footer />
     </main>
+    </>
   );
 }
