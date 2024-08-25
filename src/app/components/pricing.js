@@ -1,8 +1,3 @@
-import React from "react";
-import { useUser } from "../../hooks/useUser";
-import { useRouter } from "next/navigation";
-import Checkout from "./checkout";
-
 const mapThemeColorToClass = (themeColor) => {
   if (themeColor === "synthwave") {
     return "bg-[#1d232a]";
@@ -13,9 +8,6 @@ const mapThemeColorToClass = (themeColor) => {
 
 export default function Pricing({ theme }) {
   const themeClass = mapThemeColorToClass(theme);
-
-
-
   return (
     <div class="flex flex-col p-6 gap-3 justify-center sm:flex-row sm:justify-center">
       <style jsx>{`
@@ -85,7 +77,7 @@ export default function Pricing({ theme }) {
             </li>
           </ul>
           <div className="card-actions justify-center mt-6">
-            <button onClick={Checkout("dsfsadfsadf")} className="btn blue-to-green-btn px-28">
+            <button className="btn blue-to-green-btn px-28">
               Get 7-Day Plan
             </button>
             <p className="text-center mt-1 text-[0.7rem]">
@@ -119,7 +111,7 @@ export default function Pricing({ theme }) {
             </li>
           </ul>
           <div className="card-actions justify-center mt-6">
-            <button onClick={Checkout("dsfsadfsadf")} className="btn pink-to-purple-btn px-28">
+            <button className="btn pink-to-purple-btn px-28">
               Get 30-Day Plan
             </button>
             <p className="text-center mt-1 text-[0.7rem]">
@@ -148,7 +140,7 @@ export default function Pricing({ theme }) {
             </li>
           </ul>
           <div className="card-actions justify-center mt-6">
-            <button onClick={Checkout("dsfsadfsadf")} className="btn orange-to-red-btn px-28">
+            <button className="btn orange-to-red-btn px-28">
               Get 180-Day Plan
             </button>
             <p className="text-center mt-1 text-[0.7rem]">

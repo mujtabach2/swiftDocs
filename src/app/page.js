@@ -3,7 +3,7 @@ import supabase from "./config/supabaseClient";
 import Navbar from "./components/navbar";
 import { useEffect, useState } from "react";
 import Main from "./components/main";
-import Pricing from "./components/subscribtions/pricing";
+import Pricing from "./components/pricing";
 import Footer from "./components/footer";
 import Features from "./components/features";
 

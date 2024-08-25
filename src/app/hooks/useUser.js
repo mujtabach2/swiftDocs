@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import supabase from "../config/supabaseClient";
+import e from "express";
 
 const initialUser = {
   id: "",
@@ -8,15 +9,13 @@ const initialUser = {
   image_url: "",
   created_at: "",
 };
-
-export type User = typeof initialUser;
-
-export default function useUser() {
-  const [user, setUser] = useState<User | null>(null);
+function useUser() {
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
     const fetchUser = async () => {
-      const { data: authData, error: authError } = await supabase.auth.getSession();
+      const { data: authData, error: authError } =
+        await supabase.auth.getSession();
       if (authError) {
         console.error(authError);
         setUser(initialUser);
@@ -34,7 +33,7 @@ export default function useUser() {
           console.error(profileError);
           setUser(initialUser);
         } else {
-          setUser(profileData as User);
+          setUser(profileData);
         }
       } else {
         setUser(initialUser);
@@ -46,3 +45,5 @@ export default function useUser() {
 
   return user;
 }
+
+export { useUser };
