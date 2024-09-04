@@ -33,5 +33,5 @@
 
 ## Timeline
 - **Week 1**:
-  - Complete all tasks listed above.
+  - Complete all tasks listed abov
   - Prepare for launch.

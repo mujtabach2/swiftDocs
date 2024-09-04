@@ -8,7 +8,6 @@ import Image from "next/image";
 const metadata = {
   title: "Login",
   description: "Login to access your account",
-
 }
  
 
