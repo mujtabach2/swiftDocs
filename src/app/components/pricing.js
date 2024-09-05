@@ -56,7 +56,8 @@ export default function Pricing({ theme }) {
           color: white;
         }
       `}</style>
-      <div className={`card w-96 shadow-xl ${themeClass} `}>
+    <div className={`card w-96 shadow-xl ${theme === "synthwave" ? "bg-gray-900" : "bg-white"}`}>
+
         <div className="card-body">
           <h2 className="card-title text-2xl font-bold">7-Day Plan</h2>
           <p className="mt-4">
@@ -87,9 +88,7 @@ export default function Pricing({ theme }) {
         </div>
       </div>
 
-      <div
-        className={`card w-96  shadow-xl ${themeClass} border border-2 border-[#5373b8] indicator`}
-      >
+      <div className={`card w-96 shadow-xl ${theme === "synthwave" ? "bg-gray-900" : "bg-white"} border border-2 border-[#5373b8] indicator`}>
         <span className="indicator-item indicator-top  border-none text-white indicator-center badge bg-gradient-to-r from-[#e9507f] to-[#5373b8]">
           Most Loved
         </span>
@@ -121,7 +120,7 @@ export default function Pricing({ theme }) {
         </div>
       </div>
 
-      <div className={`card w-96 shadow-xl ${themeClass} `}>
+      <div className={`card w-96 shadow-xl ${theme === "synthwave" ? "bg-gray-900" : "bg-white"}`}>
         <div className="card-body">
           <h2 className="card-title text-2xl font-bold">180-Day Plan</h2>
           <p className="mt-4">

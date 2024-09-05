@@ -3,11 +3,11 @@ import Image from "next/image";
 import logo from "../logo.png"; 
 
 export default function Features() {
-  const [selectedAnime, setSelectedAnime] = useState("Quotes");
+  const [selectedResumeType, setSelectedResumeType] = useState("Professional");
   const [animate, setAnimate] = useState(false);
 
   const handleSelectChange = (event) => {
-    setSelectedAnime(event.target.value);
+    setSelectedResumeType(event.target.value);
     setAnimate(true);
   };
 
@@ -42,24 +42,32 @@ export default function Features() {
         }
       `}</style>
       <h1 className="text-[3rem] mb-4 flex justify-center bubble">
-        Tired of managing your documents manually?
+        Tired of struggling with your resume?
       </h1>
+      <p className="text-lg mb-4 flex justify-center">
+        We've got you covered.
+      </p>
+      <div className="flex justify-center mb-8">
+        <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-primary animate-bounce" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+        </svg>
+      </div>
 
       <div className="flex flex-col gap-4 items-left sm:flex-row mt-20">
         <div className=" flex-1 card ">
           <div className="flex gap-2 ">
             <select
               className="select select-success w-[10vw] ml-40 mb-10 max-w-xs"
-              value={selectedAnime}
+              value={selectedResumeType}
               onChange={handleSelectChange}
             >
               <option disabled value="">
-                Pick your Document Type
+                Pick your Resume Type
               </option>
-              <option value="Quotes">Quotes</option>
-              <option value="Cover Letters">Cover Letters</option>
-              <option value="Proposals">Proposals</option>
-              <option value="Contracts">Contracts</option>
+              <option value="Professional">Professional</option>
+              <option value="Creative">Creative</option>
+              <option value="Academic">Academic</option>
+              <option value="Executive">Executive</option>
             </select>
             <div class="text-base-content/90 lg:text-lg pt-3">
               <p> — Scroll me!</p>
@@ -103,65 +111,64 @@ export default function Features() {
             >
               <figure className="px-10 pt-10">
                 <img
-                  src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.jpg"
-                  alt="Shoes"
+                  src="/images/resume-preview.jpg"
+                  alt="Resume Preview"
                   className="rounded-xl"
                 />
               </figure>
               <div className="card-body items-center text-center">
-                <h2 className="card-title">Shoes!</h2>
-                <p>If a dog chews shoes whose shoes does he choose?</p>
-                <p>{selectedAnime}</p>
+                <h2 className="card-title">{selectedResumeType} Resume</h2>
+                <p>Optimized for {selectedResumeType.toLowerCase()} job seekers</p>
                 <div className="card-actions">
-                  <button className="btn btn-primary">Buy Now</button>
+                  <button className="btn btn-primary">Optimize Now</button>
                 </div>
               </div>
             </div>
             <div className="card w-96 bg-base-100 shadow-xl">
               <figure className="px-10 pt-10">
                 <img
-                  src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.jpg"
-                  alt="Shoes"
+                  src="/images/resume-preview.jpg"
+                  alt="Resume Preview"
                   className="rounded-xl"
                 />
               </figure>
               <div className="card-body items-center text-center">
-                <h2 className="card-title">Shoes!</h2>
-                <p>If a dog chews shoes whose shoes does he choose?</p>
+                <h2 className="card-title">{selectedResumeType} Resume</h2>
+                <p>Optimized for {selectedResumeType.toLowerCase()} job seekers</p>
                 <div className="card-actions">
-                  <button className="btn btn-primary">Buy Now</button>
+                  <button className="btn btn-primary">Optimize Now</button>
                 </div>
               </div>
             </div>
             <div className="card w-96 bg-base-100 shadow-xl">
               <figure className="px-10 pt-10">
                 <img
-                  src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.jpg"
-                  alt="Shoes"
+                  src="/images/resume-preview.jpg"
+                  alt="Resume Preview"
                   className="rounded-xl"
                 />
               </figure>
               <div className="card-body items-center text-center">
-                <h2 className="card-title">Shoes!</h2>
-                <p>If a dog chews shoes whose shoes does he choose?</p>
+                <h2 className="card-title">{selectedResumeType} Resume</h2>
+                <p>Optimized for {selectedResumeType.toLowerCase()} job seekers</p>
                 <div className="card-actions">
-                  <button className="btn btn-primary">Buy Now</button>
+                  <button className="btn btn-primary">Optimize Now</button>
                 </div>
               </div>
             </div>
             <div className="card w-96 bg-base-100 shadow-xl">
               <figure className="px-10 pt-10">
                 <img
-                  src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.jpg"
-                  alt="Shoes"
+                  src="/images/resume-preview.jpg"
+                  alt="Resume Preview"
                   className="rounded-xl"
                 />
               </figure>
               <div className="card-body items-center text-center">
-                <h2 className="card-title">Shoes!</h2>
-                <p>If a dog chews shoes whose shoes does he choose?</p>
+                <h2 className="card-title">{selectedResumeType} Resume</h2>
+                <p>Optimized for {selectedResumeType.toLowerCase()} job seekers</p>
                 <div className="card-actions">
-                  <button className="btn btn-primary">Buy Now</button>
+                  <button className="btn btn-primary">Optimize Now</button>
                 </div>
               </div>
             </div>
@@ -228,12 +235,10 @@ export default function Features() {
                 </div>
                 <div>
                   <h1 className="font-bold text-xl ">
-                    Automate your document creation process
+                    AI-powered resume optimization
                   </h1>
                   <p className="text-sm">
-                    Generate professional-grade documents effortlessly with our
-                    advanced AI algorithms. Say goodbye to manual document
-                    creation and let our platform do the heavy lifting for you.
+                    Our advanced AI algorithms analyze your resume and provide tailored suggestions to highlight your strengths and match industry standards.
                   </p>
                 </div>
               </div>
@@ -289,13 +294,10 @@ export default function Features() {
                 <div>
                   <h1 className="font-bold text-xl">
                     {" "}
-                    Save time and resources
+                    Customized for your industry
                   </h1>
                   <p className="text-sm">
-                    Our platform is designed to help you save time and resources
-                    by automating your document creation process. Spend less
-                    time on paperwork and more time on what matters most. Create
-                    in just 3 minutes.
+                    Get industry-specific recommendations to make your resume stand out. Our platform adapts to various fields, ensuring your resume speaks the right language.
                   </p>
                 </div>
               </div>
@@ -347,13 +349,10 @@ export default function Features() {
                 </div>
                 <div>
                   <h1 className="font-bold text-xl">
-                    Preview your documents in real-time
+                    Real-time resume preview
                   </h1>
                   <p className="text-sm">
-                    Our platform allows you to preview your documents in
-                    real-time, ensuring that you get exactly what you need. Make
-                    changes on the fly and see the results instantly with
-                    AI-powered insights.
+                    See your optimized resume in real-time as you make changes. Our platform provides instant feedback, allowing you to craft the perfect resume quickly and efficiently.
                   </p>
                 </div>
               </div>

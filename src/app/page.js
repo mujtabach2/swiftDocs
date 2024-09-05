@@ -6,6 +6,9 @@ import Main from "./components/main";
 import Pricing from "./components/pricing";
 import Footer from "./components/footer";
 import Features from "./components/features";
+import Trusted from "./components/trusted";
+import CTA from "./components/cta";
+
 
 
 export default function Home() {
@@ -23,24 +26,22 @@ export default function Home() {
   };
 
   return (
-    <>
-    <main className="flex min-h-screen flex-col items-center justify-between p-24 ">
-      <section id="main">
+    <div className="flex flex-col min-h-screen">
+      <main className="flex-grow flex flex-col items-center p-4 sm:p-8 md:p-16 lg:p-24">
         <Navbar handleThemeChange={toggleTheme} theme={theme} />
-      </section>
-      
-      <Main />
+        
+        <Main />
+        <Trusted />
+        <Features />
+        <CTA theme={theme} />
+        <section id="pricing" className="w-full">
+          <Pricing theme={theme} />
+        </section>
 
-      <Features />
-
-      <section id="pricing">
-        <Pricing theme={theme} />
-      </section>
-
-      {/*button to login [age ] */}
+        {/*button to login [age ] */}
+      </main>
 
       <Footer />
-    </main>
-    </>
+    </div>
   );
 }
