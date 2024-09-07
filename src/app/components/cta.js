@@ -1,28 +1,29 @@
 import React from 'react';
 import Link from 'next/link';
-
-const CTA = ({ handleThemeChange, theme }) => {
+import { scrollToPricing } from '../uils/scrollTo';
+const FinalCTA = () => {
   return (
-    <section className={`${theme === 'dark' ? 'bg-gray-800 text-white' : 'bg-primary text-white'} py-16 w-full`}>
-      <div className="px-4 text-center">
-        <h2 className="text-4xl font-bold mb-4 font-comic-sans">Beat the ATS and Land More Interviews</h2>
-        <p className="mb-8 max-w-3xl mx-auto font-quicksand text-lg">
-          Did you know that 75% of resumes are rejected by ATS before a human ever sees them? 
-          Our tool helps you optimize your resume to pass ATS scans and get into the hands of recruiters.
+    <section className="py-16 sm:py-24 bg-base-100 my-8 sm:my-16">
+      <div className="container mx-auto px-4 text-center">
+        <h2 className="text-3xl sm:text-5xl font-bold mb-4 sm:mb-8 text-base-content">
+          Get More Interviews Today
+        </h2>
+        <p className="text-lg sm:text-2xl mb-8 sm:mb-12 text-base-content max-w-3xl mx-auto">
+          Join thousands of job seekers who've boosted their career prospects with our AI-powered resume optimization.
         </p>
-        <Link 
-          href="/resume-optimizer" 
-          className={`${
-            theme === 'dark' 
-              ? 'bg-white text-gray-800 hover:bg-gray-200' 
-              : 'bg-white text-primary hover:bg-secondary hover:text-white'
-          } font-bold py-3 px-6 rounded-full transition duration-300 font-poppins text-lg`}
+        
+        <button 
+          onClick={scrollToPricing} 
+          className="btn bg-[#00Fa9a] hover:bg-[#00Fa9a]/80 text-black border-none btn-lg text-lg sm:text-xl px-6 sm:px-12 py-2 sm:py-4"
         >
-          Optimize Your Resume Now
-        </Link>
+          Start Optimizing My Resume
+        </button>
+        <p className="mt-6 sm:mt-8 text-base sm:text-lg text-[#00Fa9a]">
+          Limited Time Free Trial Available
+        </p>
       </div>
     </section>
   );
 };
 
-export default CTA;
+export default FinalCTA;

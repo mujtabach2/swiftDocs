@@ -7,13 +7,15 @@ import Pricing from "./components/pricing";
 import Footer from "./components/footer";
 import Features from "./components/features";
 import Trusted from "./components/trusted";
-import CTA from "./components/cta";
+import ValueProp from "./components/valueProp";
+import Testimonial from "./components/testimonial";
+import FinalCTA from "./components/cta";
 
 
 
 export default function Home() {
   console.log(supabase);
-  const [theme, setTheme] = useState("synthwave");
+  const [theme, setTheme] = useState("mytheme");
 
   useEffect(() => {
     document.querySelector("body").setAttribute("data-theme", theme);
@@ -32,16 +34,28 @@ export default function Home() {
         
         <Main />
         <Trusted />
+        <ValueProp theme={theme} />
         <Features />
-        <CTA theme={theme} />
+        {/* <Video /> */}
         <section id="pricing" className="w-full">
           <Pricing theme={theme} />
         </section>
-
-        {/*button to login [age ] */}
+        <Testimonial theme={theme} />
+        <FinalCTA />
       </main>
 
       <Footer />
     </div>
   );
+
+// layout 
+  // header
+  // hero
+  // value prop
+  // features
+  // video
+  // pricing
+  // testimonials
+// cta
+//footer
 }

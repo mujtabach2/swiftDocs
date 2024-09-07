@@ -1,11 +1,9 @@
 import logo from "../logo.png";
 import Image from "next/image";
+import { scrollToPricing } from '../uils/scrollTo';
 
 export default function Navbar({ handleThemeChange, theme }) {
-  const scrollToPricing = () => {
-    const pricingSection = document.getElementById("pricing");
-    pricingSection.scrollIntoView({ behavior: "smooth" });
-  };
+
 
   const themeBool = theme === "synthwave";
 
@@ -38,16 +36,12 @@ export default function Navbar({ handleThemeChange, theme }) {
             tabIndex={0}
             className="p-2 shadow menu dropdown-content bg-base-100 rounded-box w-52"
           >
-            <li>
-              <a onClick={scrollHome}>Home</a>
-            </li>
-            <li>
-              <a>Examples</a>
-            </li>
-            <li>
-              <a onClick={scrollToPricing}>Pricing</a>{" "}
-              {/* Add onClick event to scroll to pricing */}
-            </li>
+            <li><a onClick={scrollHome}>Home</a></li>
+            <li><a>Examples</a></li>
+            <li><a onClick={scrollToPricing}>Pricing</a></li>
+            <li><a>Features</a></li>
+            <li><a>About</a></li>
+            <li><a>Contact</a></li>
             <li>
               <label className="swap swap-rotate ">
                 {/* Hidden checkbox controls the state */}
@@ -79,6 +73,7 @@ export default function Navbar({ handleThemeChange, theme }) {
           </ul>
         </div>
       </div>
+      
       <div className="navbar-center">
         <div className="flex flex-row gap-1 items-center pl-10">
           <Image src={logo} className=" h-[3rem] w-auto pb-2 pr-[-2vw]" />

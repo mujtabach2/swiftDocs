@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import logo from "../logo.png"; 
+import { scrollToPricing } from '../uils/scrollTo';
 
 export default function Features() {
   const [selectedResumeType, setSelectedResumeType] = useState("Professional");
@@ -41,7 +42,7 @@ export default function Features() {
           }
         }
       `}</style>
-      <h1 className="text-[3rem] mb-4 flex justify-center bubble">
+      <h1 className="text-2xl sm:text-3xl md:text-[3rem] mb-4 text-center bubble">
         Tired of struggling with your resume?
       </h1>
       <p className="text-lg mb-4 flex justify-center">
