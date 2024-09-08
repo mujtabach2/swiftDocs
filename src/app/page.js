@@ -10,21 +10,40 @@ import Trusted from "./components/trusted";
 import ValueProp from "./components/valueProp";
 import Testimonial from "./components/testimonial";
 import FinalCTA from "./components/cta";
-
-
-
+import ChatModal from "./components/chatModal";
+import { useRouter } from 'next/navigation';
 export default function Home() {
   console.log(supabase);
   const [theme, setTheme] = useState("mytheme");
+  const [isChatOpen, setIsChatOpen] = useState(false);
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+  const router = useRouter();
+
+
+  const openSettings = () => setIsSettingsOpen(true);
+  const closeSettings = () => setIsSettingsOpen(false);
+
 
   useEffect(() => {
+    const checkAuth = async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (user) {
+        router.push('/optimize');
+      }
+    };
+
+    checkAuth();
     document.querySelector("body").setAttribute("data-theme", theme);
-  }, [theme]);
+  }, [theme, router]);
 
   const toggleTheme = () => {
     setTheme((prevTheme) =>
       prevTheme === "mytheme" ? "synthwave" : "mytheme",
     );
+  };
+
+  const toggleChat = () => {
+    setIsChatOpen(!isChatOpen);
   };
 
   return (
@@ -42,6 +61,21 @@ export default function Home() {
         </section>
         <Testimonial theme={theme} />
         <FinalCTA />
+        
+        {/* Chat button */}
+        {!isChatOpen && (
+          <button
+            onClick={toggleChat}
+            className="fixed bottom-4 right-4 bg-blue-500 text-white p-4 rounded-full shadow-lg hover:bg-blue-600"
+          >
+            Chat with Us
+          </button>
+        )}
+
+        {/* Settings button */}
+        
+        {/* Chat window */}
+        <ChatModal isOpen={isChatOpen} onClose={() => setIsChatOpen(false)} />
       </main>
 
       <Footer />

@@ -1,6 +1,6 @@
 import express from "express";
 import ResumeOptimizer from "../open-ai";
-
+import {latexToHTML} from "../latex-converter";
 
 const app = express();
 app.use(express.json());
@@ -19,6 +19,8 @@ app.post("/optimize-resume", async (req, res) => {
       existingResume,
       jobListing
     });
+    // convert the optimized resume to pdf
+    const optimizedResumePDF = await latexToHTML(optimizedResume, "optimizedResume.pdf");
 
     res.json({ optimizedResume });
   } catch (error) {
