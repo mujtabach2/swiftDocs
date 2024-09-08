@@ -1,5 +1,9 @@
 import { ChatOpenAI } from "@langchain/openai";
-import { SystemMessagePromptTemplate, HumanMessagePromptTemplate, ChatPromptTemplate } from "@langchain/core/prompts";
+import {
+  SystemMessagePromptTemplate,
+  HumanMessagePromptTemplate,
+  ChatPromptTemplate,
+} from "@langchain/core/prompts";
 import { LLMChain } from "langchain/chains";
 const { OPENAI_API_KEY } = require("../config/openApi");
 
@@ -33,7 +37,9 @@ class ResumeOptimizer {
 
     const resumePrompt = ChatPromptTemplate.fromMessages([
       SystemMessagePromptTemplate.fromTemplate(systemPrompt),
-      HumanMessagePromptTemplate.fromTemplate("Existing Resume:\n{existingResume}\n\nJob Listing:\n{jobListing}\n\nOptimized Resume in LaTeX format:"),
+      HumanMessagePromptTemplate.fromTemplate(
+        "Existing Resume:\n{existingResume}\n\nJob Listing:\n{jobListing}\n\nOptimized Resume in LaTeX format:",
+      ),
     ]);
 
     const chain = new LLMChain({

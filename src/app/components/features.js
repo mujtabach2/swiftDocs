@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
-import logo from "../logo.png"; 
-import { scrollToPricing } from '../uils/scrollTo';
+import logo from "../logo.png";
+import { scrollToPricing } from "../uils/scrollTo";
 
 export default function Features() {
   const [selectedResumeType, setSelectedResumeType] = useState("Professional");
@@ -45,12 +45,21 @@ export default function Features() {
       <h1 className="text-2xl sm:text-3xl md:text-[3rem] mb-4 text-center bubble">
         Tired of struggling with your resume?
       </h1>
-      <p className="text-lg mb-4 flex justify-center">
-        We've got you covered.
-      </p>
+      <p className="text-lg mb-4 flex justify-center">We've got you covered.</p>
       <div className="flex justify-center mb-8">
-        <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-primary animate-bounce" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className="h-8 w-8 text-primary animate-bounce"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M19 14l-7 7m0 0l-7-7m7 7V3"
+          />
         </svg>
       </div>
 
@@ -119,7 +128,9 @@ export default function Features() {
               </figure>
               <div className="card-body items-center text-center">
                 <h2 className="card-title">{selectedResumeType} Resume</h2>
-                <p>Optimized for {selectedResumeType.toLowerCase()} job seekers</p>
+                <p>
+                  Optimized for {selectedResumeType.toLowerCase()} job seekers
+                </p>
                 <div className="card-actions">
                   <button className="btn btn-primary">Optimize Now</button>
                 </div>
@@ -135,7 +146,9 @@ export default function Features() {
               </figure>
               <div className="card-body items-center text-center">
                 <h2 className="card-title">{selectedResumeType} Resume</h2>
-                <p>Optimized for {selectedResumeType.toLowerCase()} job seekers</p>
+                <p>
+                  Optimized for {selectedResumeType.toLowerCase()} job seekers
+                </p>
                 <div className="card-actions">
                   <button className="btn btn-primary">Optimize Now</button>
                 </div>
@@ -151,7 +164,9 @@ export default function Features() {
               </figure>
               <div className="card-body items-center text-center">
                 <h2 className="card-title">{selectedResumeType} Resume</h2>
-                <p>Optimized for {selectedResumeType.toLowerCase()} job seekers</p>
+                <p>
+                  Optimized for {selectedResumeType.toLowerCase()} job seekers
+                </p>
                 <div className="card-actions">
                   <button className="btn btn-primary">Optimize Now</button>
                 </div>
@@ -167,7 +182,9 @@ export default function Features() {
               </figure>
               <div className="card-body items-center text-center">
                 <h2 className="card-title">{selectedResumeType} Resume</h2>
-                <p>Optimized for {selectedResumeType.toLowerCase()} job seekers</p>
+                <p>
+                  Optimized for {selectedResumeType.toLowerCase()} job seekers
+                </p>
                 <div className="card-actions">
                   <button className="btn btn-primary">Optimize Now</button>
                 </div>
@@ -239,7 +256,9 @@ export default function Features() {
                     AI-powered resume optimization
                   </h1>
                   <p className="text-sm">
-                    Our advanced AI algorithms analyze your resume and provide tailored suggestions to highlight your strengths and match industry standards.
+                    Our advanced AI algorithms analyze your resume and provide
+                    tailored suggestions to highlight your strengths and match
+                    industry standards.
                   </p>
                 </div>
               </div>
@@ -298,7 +317,9 @@ export default function Features() {
                     Customized for your industry
                   </h1>
                   <p className="text-sm">
-                    Get industry-specific recommendations to make your resume stand out. Our platform adapts to various fields, ensuring your resume speaks the right language.
+                    Get industry-specific recommendations to make your resume
+                    stand out. Our platform adapts to various fields, ensuring
+                    your resume speaks the right language.
                   </p>
                 </div>
               </div>
@@ -353,7 +374,9 @@ export default function Features() {
                     Real-time resume preview
                   </h1>
                   <p className="text-sm">
-                    See your optimized resume in real-time as you make changes. Our platform provides instant feedback, allowing you to craft the perfect resume quickly and efficiently.
+                    See your optimized resume in real-time as you make changes.
+                    Our platform provides instant feedback, allowing you to
+                    craft the perfect resume quickly and efficiently.
                   </p>
                 </div>
               </div>

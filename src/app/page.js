@@ -11,7 +11,7 @@ import ValueProp from "./components/valueProp";
 import Testimonial from "./components/testimonial";
 import FinalCTA from "./components/cta";
 import ChatModal from "./components/chatModal";
-import { useRouter } from 'next/navigation';
+import { useRouter } from "next/navigation";
 export default function Home() {
   console.log(supabase);
   const [theme, setTheme] = useState("mytheme");
@@ -19,16 +19,16 @@ export default function Home() {
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const router = useRouter();
 
-
   const openSettings = () => setIsSettingsOpen(true);
   const closeSettings = () => setIsSettingsOpen(false);
 
-
   useEffect(() => {
     const checkAuth = async () => {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (user) {
-        router.push('/optimize');
+        router.push("/optimize");
       }
     };
 
@@ -50,7 +50,7 @@ export default function Home() {
     <div className="flex flex-col min-h-screen">
       <main className="flex-grow flex flex-col items-center p-4 sm:p-8 md:p-16 lg:p-24">
         <Navbar handleThemeChange={toggleTheme} theme={theme} />
-        
+
         <Main />
         <Trusted />
         <ValueProp theme={theme} />
@@ -61,7 +61,7 @@ export default function Home() {
         </section>
         <Testimonial theme={theme} />
         <FinalCTA />
-        
+
         {/* Chat button */}
         {!isChatOpen && (
           <button
@@ -73,7 +73,7 @@ export default function Home() {
         )}
 
         {/* Settings button */}
-        
+
         {/* Chat window */}
         <ChatModal isOpen={isChatOpen} onClose={() => setIsChatOpen(false)} />
       </main>
@@ -82,7 +82,7 @@ export default function Home() {
     </div>
   );
 
-// layout 
+  // layout
   // header
   // hero
   // value prop
@@ -90,6 +90,6 @@ export default function Home() {
   // video
   // pricing
   // testimonials
-// cta
-//footer
+  // cta
+  //footer
 }

@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import { useEffect } from 'react';
-import { useRouter } from 'next/router';
-import { useUser, useSupabaseClient } from '@supabase/auth-helpers-react';
+import { useEffect } from "react";
+import { useRouter } from "next/router";
+import { useUser, useSupabaseClient } from "@supabase/auth-helpers-react";
 
 export default function PaymentSuccess() {
   const router = useRouter();
@@ -19,10 +19,10 @@ export default function PaymentSuccess() {
   const verifySession = async (sessionId: string) => {
     try {
       // Verify the session on the server-side
-      const response = await fetch('/api/verify-session', {
-        method: 'POST',
+      const response = await fetch("/api/verify-session", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({ sessionId }),
       });
@@ -30,20 +30,20 @@ export default function PaymentSuccess() {
       if (response.ok) {
         // Refresh user data to get updated subscription status
         const { data, error } = await supabase
-          .from('profiles')
-          .select('subscription_status')
-          .eq('id', user.id)
+          .from("profiles")
+          .select("subscription_status")
+          .eq("id", user.id)
           .single();
 
         if (error) throw error;
 
         // Redirect to dashboard or appropriate page
-        router.push('/dashboard');
+        router.push("/dashboard");
       } else {
-        throw new Error('Failed to verify session');
+        throw new Error("Failed to verify session");
       }
     } catch (error) {
-      console.error('Error verifying session:', error);
+      console.error("Error verifying session:", error);
       // Handle error (e.g., show error message to user)
     }
   };

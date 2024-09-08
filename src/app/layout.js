@@ -2,7 +2,6 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { title } from "process";
 
-
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
@@ -14,10 +13,10 @@ export const metadata = {
         url: "logo.png",
         width: 800,
         height: 600,
-        alt: 'SwiftDocs Logo',
+        alt: "SwiftDocs Logo",
         optimize: false,
-      }
-    ]
+      },
+    ],
   },
   type: "website",
   keywords: ["document", "creation", "effortless"],

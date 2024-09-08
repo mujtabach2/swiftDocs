@@ -1,8 +1,13 @@
-import React from 'react';
+import React from "react";
 
 const companies = [
-  'Company A', 'Company B', 'Company C', 'Company D',
-  'Company E', 'Company F', 'Company G'
+  "Company A",
+  "Company B",
+  "Company C",
+  "Company D",
+  "Company E",
+  "Company F",
+  "Company G",
 ];
 
 const Trusted = () => {

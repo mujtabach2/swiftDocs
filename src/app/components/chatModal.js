@@ -1,27 +1,48 @@
-import { useState } from 'react';
+import { useState } from "react";
 
 const ChatModal = ({ isOpen, onClose }) => {
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState("");
   const [chatHistory, setChatHistory] = useState([]);
-  const [activeTab, setActiveTab] = useState('chat');
+  const [activeTab, setActiveTab] = useState("chat");
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (message.trim()) {
-      setChatHistory([...chatHistory, { type: 'user', content: message }]);
+      setChatHistory([...chatHistory, { type: "user", content: message }]);
       // Simulate response
       setTimeout(() => {
-        setChatHistory(prev => [...prev, { type: 'bot', content: "Thanks for your message! We'll get back to you soon." }]);
+        setChatHistory((prev) => [
+          ...prev,
+          {
+            type: "bot",
+            content: "Thanks for your message! We'll get back to you soon.",
+          },
+        ]);
       }, 1000);
-      setMessage('');
+      setMessage("");
     }
   };
 
   const faqItems = [
-    { question: "What is your return policy?", answer: "We offer a 30-day return policy for all unused items." },
-    { question: "How long does shipping take?", answer: "Shipping typically takes 3-5 business days within the continental US." },
-    { question: "Do you offer international shipping?", answer: "Yes, we ship to select countries. Please check our shipping page for details." },
-    { question: "How can I track my order?", answer: "You'll receive a tracking number via email once your order ships." },
+    {
+      question: "What is your return policy?",
+      answer: "We offer a 30-day return policy for all unused items.",
+    },
+    {
+      question: "How long does shipping take?",
+      answer:
+        "Shipping typically takes 3-5 business days within the continental US.",
+    },
+    {
+      question: "Do you offer international shipping?",
+      answer:
+        "Yes, we ship to select countries. Please check our shipping page for details.",
+    },
+    {
+      question: "How can I track my order?",
+      answer:
+        "You'll receive a tracking number via email once your order ships.",
+    },
   ];
 
   if (!isOpen) return null;
@@ -36,24 +57,29 @@ const ChatModal = ({ isOpen, onClose }) => {
       </div>
       <div className="flex border-b">
         <button
-          className={`flex-1 py-2 ${activeTab === 'chat' ? 'bg-gray-100 font-semibold' : ''}`}
-          onClick={() => setActiveTab('chat')}
+          className={`flex-1 py-2 ${activeTab === "chat" ? "bg-gray-100 font-semibold" : ""}`}
+          onClick={() => setActiveTab("chat")}
         >
           Chat
         </button>
         <button
-          className={`flex-1 py-2 ${activeTab === 'faq' ? 'bg-gray-100 font-semibold' : ''}`}
-          onClick={() => setActiveTab('faq')}
+          className={`flex-1 py-2 ${activeTab === "faq" ? "bg-gray-100 font-semibold" : ""}`}
+          onClick={() => setActiveTab("faq")}
         >
           FAQ
         </button>
       </div>
-      {activeTab === 'chat' ? (
+      {activeTab === "chat" ? (
         <>
           <div className="flex-grow overflow-y-auto p-4">
             {chatHistory.map((msg, index) => (
-              <div key={index} className={`mb-2 ${msg.type === 'user' ? 'text-right' : 'text-left'}`}>
-                <span className={`inline-block p-2 rounded-lg ${msg.type === 'user' ? 'bg-blue-100' : 'bg-gray-200'}`}>
+              <div
+                key={index}
+                className={`mb-2 ${msg.type === "user" ? "text-right" : "text-left"}`}
+              >
+                <span
+                  className={`inline-block p-2 rounded-lg ${msg.type === "user" ? "bg-blue-100" : "bg-gray-200"}`}
+                >
                   {msg.content}
                 </span>
               </div>

@@ -1,13 +1,13 @@
 import supabase from "../config/supabaseClient";
-import jsPDF from 'jspdf';
-import html2canvas from 'html2canvas';
+import jsPDF from "jspdf";
+import html2canvas from "html2canvas";
 
 export async function optimizeResume(existingResume, jobListing) {
   try {
     // Call the Supabase function
-    const { data, error } = await supabase.functions.invoke('set-document', {
+    const { data, error } = await supabase.functions.invoke("set-document", {
       body: JSON.stringify({ existingResume, jobListing }),
-      method: 'POST',
+      method: "POST",
     });
 
     if (error) throw error;
@@ -20,10 +20,10 @@ export async function optimizeResume(existingResume, jobListing) {
 
     return {
       html: optimizedResumeHTML,
-      optimized: pdfBlob
+      optimized: pdfBlob,
     };
   } catch (error) {
-    console.error('Error optimizing resume:', error.message);
+    console.error("Error optimizing resume:", error.message);
     throw error;
   }
 }
@@ -32,7 +32,7 @@ export async function optimizeResume(existingResume, jobListing) {
 async function htmlToPDF(html) {
   try {
     // Create a temporary container for the HTML content
-    const container = document.createElement('div');
+    const container = document.createElement("div");
     container.innerHTML = html;
     document.body.appendChild(container);
 
@@ -40,23 +40,22 @@ async function htmlToPDF(html) {
     const canvas = await html2canvas(container);
 
     // Create a new jsPDF instance
-    const pdf = new jsPDF('p', 'mm', 'a4');
-    const imgData = canvas.toDataURL('image/png');
+    const pdf = new jsPDF("p", "mm", "a4");
+    const imgData = canvas.toDataURL("image/png");
     const pdfWidth = pdf.internal.pageSize.getWidth();
     const pdfHeight = pdf.internal.pageSize.getHeight();
 
-    pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+    pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
 
     // Generate PDF as Blob
-    const pdfBlob = pdf.output('blob');
+    const pdfBlob = pdf.output("blob");
 
     // Clean up: remove the temporary container
     document.body.removeChild(container);
 
     return pdfBlob;
   } catch (error) {
-    console.error('Error converting HTML to PDF:', error);
+    console.error("Error converting HTML to PDF:", error);
     throw error;
   }
 }
-

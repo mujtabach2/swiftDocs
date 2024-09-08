@@ -23,8 +23,6 @@ class BusinessProposal {
     this.resources = detail[8];
     this.budget = detail[9];
 
-
-
     this.latex = `\\documentclass[a4paper,12pt]{article}
     \\usepackage[left=2.5cm,right=2.5cm,top=2.5cm,bottom=2.5cm]{geometry}
     \\usepackage{graphicx}

@@ -1,8 +1,6 @@
-import React from 'react';
-import Link from 'next/link';
-import { scrollToPricing } from '../uils/scrollTo';
-
-
+import React from "react";
+import Link from "next/link";
+import { scrollToPricing } from "../uils/scrollTo";
 
 const Main = () => {
   return (
@@ -13,16 +11,21 @@ const Main = () => {
             Optimize Your Resume with AI
           </h1>
           <p className="text-lg sm:text-xl mb-8 sm:mb-12 text-base-content max-w-3xl mx-auto">
-            Get more interviews and land your dream job with our AI-powered resume optimization tool. Stand out from the competition and impress employers.
+            Get more interviews and land your dream job with our AI-powered
+            resume optimization tool. Stand out from the competition and impress
+            employers.
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4">
-            <button 
-              onClick={scrollToPricing} 
+            <button
+              onClick={scrollToPricing}
               className="btn bg-[#00Fa9a] hover:bg-[#00Fa9a]/80 text-black border-none btn-lg text-lg sm:text-xl px-6 sm:px-12"
             >
               Optimize Resume
             </button>
-            <Link href="/learn-more" className="btn btn-outline btn-lg text-lg sm:text-xl px-6 sm:px-12">
+            <Link
+              href="/learn-more"
+              className="btn btn-outline btn-lg text-lg sm:text-xl px-6 sm:px-12"
+            >
               Learn More
             </Link>
           </div>
