@@ -16,10 +16,17 @@ export default function Features() {
     if (animate) {
       const timer = setTimeout(() => {
         setAnimate(false);
-      }, 300); // Animation duration
+      }, 300);
       return () => clearTimeout(timer);
     }
   }, [animate]);
+
+  const resumeTypes = [
+    { value: "Professional", image: "/images/professional-resume.jpg" },
+    { value: "Technical", image: "/images/technical-resume.jpg" },
+    { value: "Creative", image: "/images/creative-resume.jpg" },
+    { value: "Executive", image: "/images/executive-resume.jpg" },
+  ];
 
   return (
     <div className="flex flex-col mb-40 pb-10 mt-40 w-[100vw]">
@@ -43,158 +50,60 @@ export default function Features() {
         }
       `}</style>
       <h1 className="text-2xl sm:text-3xl md:text-[3rem] mb-4 text-center bubble">
-        Tired of struggling with your resume?
+        Optimize Your Resume for Any Industry
       </h1>
-      <p className="text-lg mb-4 flex justify-center">We've got you covered.</p>
-      <div className="flex justify-center mb-8">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          className="h-8 w-8 text-primary animate-bounce"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M19 14l-7 7m0 0l-7-7m7 7V3"
-          />
-        </svg>
-      </div>
+      <p className="text-lg mb-4 flex justify-center">
+        Stand out from the crowd with our AI-powered resume optimization
+      </p>
 
       <div className="flex flex-col gap-4 items-left sm:flex-row mt-20">
-        <div className=" flex-1 card ">
-          <div className="flex gap-2 ">
+        <div className="flex-1 card">
+          <div className="flex gap-2 mb-8">
             <select
-              className="select select-success w-[10vw] ml-40 mb-10 max-w-xs"
+              className="select select-success w-full max-w-xs"
               value={selectedResumeType}
               onChange={handleSelectChange}
             >
-              <option disabled value="">
-                Pick your Resume Type
-              </option>
-              <option value="Professional">Professional</option>
-              <option value="Creative">Creative</option>
-              <option value="Academic">Academic</option>
-              <option value="Executive">Executive</option>
+              {resumeTypes.map((type) => (
+                <option key={type.value} value={type.value}>
+                  {type.value} Resume
+                </option>
+              ))}
             </select>
-            <div class="text-base-content/90 lg:text-lg pt-3">
-              <p> — Scroll me!</p>
-            </div>
-            <svg
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-              transform="matrix(-1, 0, 0, 1, 0, 0)"
-              height={50}
-              className="pt-3"
-            >
-              <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-              <g
-                id="SVGRepo_tracerCarrier"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              ></g>
-              <g id="SVGRepo_iconCarrier">
-                {" "}
-                <path
-                  d="M4.5 13.5L8 17L11.5 13.5"
-                  stroke="#00Fa9a"
-                  stroke-width="1.5"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                ></path>{" "}
-                <path
-                  d="M8 17V11C8 8.79086 9.79086 7 12 7H19"
-                  stroke="#00Fa9a"
-                  stroke-width="1.5"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                ></path>{" "}
-              </g>
-            </svg>
           </div>
-          <div className="stack">
-            <div
-              className={`card w-96 bg-base-100 shadow-xl ${animate ? "card-animate" : ""}`}
-            >
-              <figure className="px-10 pt-10">
+          <div className="carousel w-full">
+            {resumeTypes.map((type, index) => (
+              <div
+                key={type.value}
+                id={`slide${index}`}
+                className="carousel-item relative w-full"
+              >
                 <img
-                  src="/images/resume-preview.jpg"
-                  alt="Resume Preview"
-                  className="rounded-xl"
+                  src={type.image}
+                  className="w-full"
+                  alt={`${type.value} Resume`}
                 />
-              </figure>
-              <div className="card-body items-center text-center">
-                <h2 className="card-title">{selectedResumeType} Resume</h2>
-                <p>
-                  Optimized for {selectedResumeType.toLowerCase()} job seekers
-                </p>
-                <div className="card-actions">
-                  <button className="btn btn-primary">Optimize Now</button>
+                <div className="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2">
+                  <a
+                    href={`#slide${index === 0 ? resumeTypes.length - 1 : index - 1}`}
+                    className="btn btn-circle"
+                  >
+                    ❮
+                  </a>
+                  <a
+                    href={`#slide${(index + 1) % resumeTypes.length}`}
+                    className="btn btn-circle"
+                  >
+                    ❯
+                  </a>
                 </div>
               </div>
-            </div>
-            <div className="card w-96 bg-base-100 shadow-xl">
-              <figure className="px-10 pt-10">
-                <img
-                  src="/images/resume-preview.jpg"
-                  alt="Resume Preview"
-                  className="rounded-xl"
-                />
-              </figure>
-              <div className="card-body items-center text-center">
-                <h2 className="card-title">{selectedResumeType} Resume</h2>
-                <p>
-                  Optimized for {selectedResumeType.toLowerCase()} job seekers
-                </p>
-                <div className="card-actions">
-                  <button className="btn btn-primary">Optimize Now</button>
-                </div>
-              </div>
-            </div>
-            <div className="card w-96 bg-base-100 shadow-xl">
-              <figure className="px-10 pt-10">
-                <img
-                  src="/images/resume-preview.jpg"
-                  alt="Resume Preview"
-                  className="rounded-xl"
-                />
-              </figure>
-              <div className="card-body items-center text-center">
-                <h2 className="card-title">{selectedResumeType} Resume</h2>
-                <p>
-                  Optimized for {selectedResumeType.toLowerCase()} job seekers
-                </p>
-                <div className="card-actions">
-                  <button className="btn btn-primary">Optimize Now</button>
-                </div>
-              </div>
-            </div>
-            <div className="card w-96 bg-base-100 shadow-xl">
-              <figure className="px-10 pt-10">
-                <img
-                  src="/images/resume-preview.jpg"
-                  alt="Resume Preview"
-                  className="rounded-xl"
-                />
-              </figure>
-              <div className="card-body items-center text-center">
-                <h2 className="card-title">{selectedResumeType} Resume</h2>
-                <p>
-                  Optimized for {selectedResumeType.toLowerCase()} job seekers
-                </p>
-                <div className="card-actions">
-                  <button className="btn btn-primary">Optimize Now</button>
-                </div>
-              </div>
-            </div>
+            ))}
           </div>
         </div>
-        <div className=" flex-1 card justify-center items-center ">
-          <ul className="space-y-[8vh] lg:w-[40vw] sm:w-[90vw]">
-            <li className="flex items-center ">
+        <div className="flex-1 card justify-center items-center">
+          <ul className="space-y-8 lg:w-[40vw] sm:w-[90vw]">
+            <li className="flex items-center">
               <div className="flex flex-row gap-4">
                 <div>
                   <svg
@@ -252,7 +161,7 @@ export default function Features() {
                   </svg>
                 </div>
                 <div>
-                  <h1 className="font-bold text-xl ">
+                  <h1 className="font-bold text-xl">
                     AI-powered resume optimization
                   </h1>
                   <p className="text-sm">
@@ -313,18 +222,15 @@ export default function Features() {
                 </div>
                 <div>
                   <h1 className="font-bold text-xl">
-                    {" "}
-                    Customized for your industry
+                    Industry-specific templates
                   </h1>
                   <p className="text-sm">
-                    Get industry-specific recommendations to make your resume
-                    stand out. Our platform adapts to various fields, ensuring
-                    your resume speaks the right language.
+                    Choose from a variety of professionally designed templates
+                    tailored to your specific industry and job role.
                   </p>
                 </div>
               </div>
             </li>
-
             <li className="flex items-center">
               <div className="flex flex-row gap-4">
                 <div>
@@ -371,12 +277,66 @@ export default function Features() {
                 </div>
                 <div>
                   <h1 className="font-bold text-xl">
-                    Real-time resume preview
+                    ATS-friendly formatting
                   </h1>
                   <p className="text-sm">
-                    See your optimized resume in real-time as you make changes.
-                    Our platform provides instant feedback, allowing you to
-                    craft the perfect resume quickly and efficiently.
+                    Ensure your resume passes through Applicant Tracking Systems
+                    with our optimized formatting and keyword suggestions.
+                  </p>
+                </div>
+              </div>
+            </li>
+            <li className="flex items-center">
+              <div className="flex flex-row gap-4">
+                <div>
+                  <svg
+                    width="40px"
+                    height="40px"
+                    viewBox="-7.68 -7.68 39.36 39.36"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="#000000"
+                  >
+                    <g
+                      id="SVGRepo_bgCarrier"
+                      strokeWidth="0"
+                      transform="translate(0,0), scale(1)"
+                    >
+                      <rect
+                        x="-7.68"
+                        y="-7.68"
+                        width="39.36"
+                        height="39.36"
+                        rx="19.68"
+                        fill="#f79236"
+                        strokeWidth="0"
+                      />
+                    </g>
+                    <g
+                      id="SVGRepo_tracerCarrier"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                    <g id="SVGRepo_iconCarrier">
+                      <path
+                        d="M1 22C1 21.4477 1.44772 21 2 21H22C22.5523 21 23 21.4477 23 22C23 22.5523 22.5523 23 22 23H2C1.44772 23 1 22.5523 1 22Z"
+                        fill="#ffffff"
+                      />
+                      <path
+                        fillRule="evenodd"
+                        clipRule="evenodd"
+                        d="M18.3056 1.87868C17.1341 0.707107 15.2346 0.707107 14.063 1.87868L3.38904 12.5526C2.9856 12.9561 2.70557 13.4662 2.5818 14.0232L2.04903 16.4206C1.73147 17.8496 3.00627 19.1244 4.43526 18.8069L6.83272 18.2741C7.38969 18.1503 7.89981 17.8703 8.30325 17.4669L18.9772 6.79289C20.1488 5.62132 20.1488 3.72183 18.9772 2.55025L18.3056 1.87868ZM15.4772 3.29289C15.8677 2.90237 16.5009 2.90237 16.8914 3.29289L17.563 3.96447C17.9535 4.35499 17.9535 4.98816 17.563 5.37868L15.6414 7.30026L13.5556 5.21448L15.4772 3.29289ZM12.1414 6.62869L4.80325 13.9669C4.66877 14.1013 4.57543 14.2714 4.53417 14.457L4.0014 16.8545L6.39886 16.3217C6.58452 16.2805 6.75456 16.1871 6.88904 16.0526L14.2272 8.71448L12.1414 6.62869Z"
+                        fill="#ffffff"
+                      />
+                    </g>
+                  </svg>
+                </div>
+                <div>
+                  <h1 className="font-bold text-xl">
+                    Real-time feedback and scoring
+                  </h1>
+                  <p className="text-sm">
+                    Receive instant feedback on your resume's strength and
+                    suggestions for improvement as you edit.
                   </p>
                 </div>
               </div>

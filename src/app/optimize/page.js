@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { optimizeResume } from "../uils/resumeOptimizer";
+import { optimizeResume, convertToPDF, convertToHTML } from "../lib/api";
 import { getUserResume, uploadResume } from "../uils/userService";
 import {
   FaFileUpload,
@@ -11,6 +11,8 @@ import {
   FaCog,
   FaSignInAlt,
   FaSignOutAlt,
+  FaFilePdf,
+  FaFileCode,
 } from "react-icons/fa";
 import Image from "next/image";
 import logo from "../logo.png";
@@ -49,6 +51,8 @@ export default function OptimizePage() {
   const [showJobListingModal, setShowJobListingModal] = useState(false);
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [user, setUser] = useState(null);
+  const [isOptimizing, setIsOptimizing] = useState(false);
+  const [optimizedLatex, setOptimizedLatex] = useState("");
 
   const router = useRouter();
 
@@ -107,45 +111,82 @@ export default function OptimizePage() {
     if (file && file.type === "application/pdf") {
       setIsUploading(true);
       try {
-        await uploadResume(file);
+        if (!user) {
+          throw new Error("User not logged in");
+        }
+        await uploadResume(file, user.id);
         await fetchUserResume();
+        // Show success message
+        alert("Resume uploaded successfully!");
       } catch (error) {
         console.error("Error uploading resume:", error);
+        // Show error message to user
+        alert(`Failed to upload resume: ${error.message}`);
+      } finally {
+        setIsUploading(false);
       }
-      setIsUploading(false);
+    } else {
+      // Show error for invalid file type
+      alert("Please upload a PDF file.");
     }
   };
 
-  const handleOptimizeClick = () => {
+  const handleOptimizeClick = async () => {
     if (user) {
-      handleOptimize();
+      if (!resume) {
+        setShowResumeModal(true);
+        return;
+      }
+      if (!jobListing.trim()) {
+        setShowJobListingModal(true);
+        return;
+      }
+      setIsOptimizing(true);
+      try {
+        const optimizedResult = await optimizeResume({
+          existingResume: resume.content,
+          jobListing: jobListing,
+        });
+        setOptimizedLatex(optimizedResult);
+        setOptimizedResume(optimizedResult); // You might want to parse this or display differently
+      } catch (error) {
+        console.error("Error optimizing resume:", error);
+        // Handle error (e.g., show error message to user)
+      }
+      setIsOptimizing(false);
     } else {
       setShowLoginModal(true);
     }
   };
 
-  const handleOptimize = async () => {
-    if (!user) {
-      setShowLoginModal(true);
-      return;
-    }
-    if (!resume) {
-      setShowResumeModal(true);
-      return;
-    }
-    if (!jobListing.trim()) {
-      setShowJobListingModal(true);
-      return;
-    }
-    setIsLoading(true);
+  const handleDownloadPDF = async () => {
+    if (!optimizedLatex) return;
     try {
-      const result = await optimizeResume(resume, jobListing);
-      setOptimizedResume(result);
-      setResumeHtml(result.html);
+      const pdfBlob = await convertToPDF(optimizedLatex);
+      const url = window.URL.createObjectURL(pdfBlob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'optimized_resume.pdf';
+      document.body.appendChild(a);
+      a.click();
+      window.URL.revokeObjectURL(url);
     } catch (error) {
-      console.error("Error optimizing resume:", error);
+      console.error('Failed to download PDF:', error);
+      // Handle error (e.g., show error message to user)
     }
-    setIsLoading(false);
+  };
+
+  const handleViewHTML = async () => {
+    if (!optimizedLatex) return;
+    try {
+      const htmlContent = await convertToHTML(optimizedLatex);
+      const newWindow = window.open();
+      newWindow?.document.write(htmlContent);
+      newWindow?.document.close();
+    } catch (error) {
+      console.error('Failed to view HTML:', error);
+      // Handle error (e.g., show error message to user)
+    }
   };
 
   return (
@@ -251,9 +292,9 @@ export default function OptimizePage() {
                 <button
                   className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-full text-white bg-blue-600 hover:bg-blue-700 md:py-4 md:text-lg md:px-10 transition duration-300"
                   onClick={handleOptimizeClick}
-                  disabled={isLoading}
+                  disabled={isOptimizing}
                 >
-                  {isLoading ? (
+                  {isOptimizing ? (
                     <>
                       <FaSync className="animate-spin mr-3" />
                       Optimizing...
@@ -331,33 +372,28 @@ export default function OptimizePage() {
             </div>
           </Modal>
 
-          {(resumeHtml || optimizedResume) && (
-            <div className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-8">
-              {resumeHtml && (
-                <div className="bg-white shadow-xl rounded-lg overflow-hidden">
-                  <div className="p-6 sm:p-8">
-                    <h2 className="text-2xl font-bold text-gray-900 mb-6">
-                      Original Resume
-                    </h2>
-                    <div
-                      className="border rounded-lg p-4 max-h-96 overflow-auto"
-                      dangerouslySetInnerHTML={{ __html: resumeHtml }}
-                    />
-                  </div>
-                </div>
-              )}
-              {optimizedResume && (
-                <div className="bg-white shadow-xl rounded-lg overflow-hidden">
-                  <div className="p-6 sm:p-8">
-                    <h2 className="text-2xl font-bold text-gray-900 mb-6">
-                      Optimized Resume
-                    </h2>
-                    <pre className="whitespace-pre-wrap p-4 border rounded-lg bg-gray-50 text-sm overflow-auto max-h-96">
-                      {optimizedResume}
-                    </pre>
-                  </div>
-                </div>
-              )}
+          {optimizedLatex && (
+            <div className="mt-8 p-6 bg-white shadow-xl rounded-lg">
+              <h3 className="text-xl font-bold mb-4">Optimized Resume</h3>
+              <pre className="bg-gray-100 p-4 rounded-lg overflow-auto max-h-96">
+                {optimizedLatex}
+              </pre>
+              <div className="mt-4 flex space-x-4">
+                <button
+                  onClick={handleDownloadPDF}
+                  className="flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700"
+                >
+                  <FaFilePdf className="mr-2" />
+                  Download PDF
+                </button>
+                <button
+                  onClick={handleViewHTML}
+                  className="flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700"
+                >
+                  <FaFileCode className="mr-2" />
+                  View HTML
+                </button>
+              </div>
             </div>
           )}
         </div>

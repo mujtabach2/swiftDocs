@@ -66,7 +66,7 @@ export default function Home() {
         {!isChatOpen && (
           <button
             onClick={toggleChat}
-            className="fixed bottom-4 right-4 bg-blue-500 text-white p-4 rounded-full shadow-lg hover:bg-blue-600"
+            className="fixed bottom-4 right-4 bg-[#00Fa9a] text-white p-4 rounded-full shadow-lg hover:bg-blue-600"
           >
             Chat with Us
           </button>

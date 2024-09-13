@@ -15,7 +15,7 @@ const ChatModal = ({ isOpen, onClose }) => {
           ...prev,
           {
             type: "bot",
-            content: "Thanks for your message! We'll get back to you soon.",
+            content: "We are currently offline, please email us at support@resumeoptimizer.com",
           },
         ]);
       }, 1000);
@@ -25,32 +25,33 @@ const ChatModal = ({ isOpen, onClose }) => {
 
   const faqItems = [
     {
-      question: "What is your return policy?",
-      answer: "We offer a 30-day return policy for all unused items.",
+      question: "What is this resume optimization site?",
+      answer: "Our site helps you improve your resume using AI-powered suggestions and industry best practices.",
     },
     {
-      question: "How long does shipping take?",
-      answer:
-        "Shipping typically takes 3-5 business days within the continental US.",
+      question: "How does the resume optimization process work?",
+      answer: "Upload your resume, and our AI analyzes it, providing tailored suggestions for improvements in content, format, and keywords.",
     },
     {
-      question: "Do you offer international shipping?",
-      answer:
-        "Yes, we ship to select countries. Please check our shipping page for details.",
+      question: "Is my resume information kept confidential?",
+      answer: "Yes, we take privacy seriously. Your resume data is encrypted and never shared with third parties.",
     },
     {
-      question: "How can I track my order?",
-      answer:
-        "You'll receive a tracking number via email once your order ships.",
+      question: "How long does the optimization process take?",
+      answer: "The initial AI analysis takes just a few seconds. You can then make changes based on suggestions at your own pace.",
     },
+    {
+      question: "Why should I use this resume optimization site?",
+      answer: "This site helps you get your resume noticed by employers. It's easy to use and provides personalized suggestions for your resume.",
+    }
   ];
 
   if (!isOpen) return null;
 
   return (
     <div className="fixed bottom-4 right-4 w-80 h-96 bg-white rounded-lg shadow-xl flex flex-col overflow-hidden">
-      <div className="bg-blue-500 text-white p-4 flex justify-between items-center">
-        <h2 className="text-lg font-bold">Support</h2>
+      <div className="bg-[#00Fa9a] text-white p-4 flex justify-between items-center">
+        <h2 className="text-lg font-bold">Resume Help</h2>
         <button onClick={onClose} className="text-white hover:text-gray-200">
           ✕
         </button>
@@ -92,11 +93,11 @@ const ChatModal = ({ isOpen, onClose }) => {
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
                 placeholder="Type your message..."
-                className="flex-grow px-3 py-2 border rounded-l-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="flex-grow px-3 py-2 border text-white rounded-l-lg focus:outline-none focus:ring-2 focus:ring-[#00Fa9a]"
               />
               <button
                 type="submit"
-                className="bg-blue-500 text-white px-4 py-2 rounded-r-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="bg-[#00Fa9a] text-white px-4 py-2 rounded-r-lg hover:bg-[#00Cd7a] focus:outline-none focus:ring-2 focus:ring-[#00Fa9a]"
               >
                 Send
               </button>
@@ -107,7 +108,7 @@ const ChatModal = ({ isOpen, onClose }) => {
         <div className="flex-grow overflow-y-auto p-4">
           {faqItems.map((item, index) => (
             <div key={index} className="mb-4">
-              <h3 className="font-semibold text-blue-600">{item.question}</h3>
+              <h3 className="font-semibold text-[#00Fa9a]">{item.question}</h3>
               <p className="mt-1 text-gray-600">{item.answer}</p>
             </div>
           ))}
