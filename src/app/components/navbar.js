@@ -3,9 +3,12 @@ import logo from "../logo.png";
 import Image from "next/image";
 import { scrollToPricing } from "../uils/scrollTo";
 import SettingsModal from "./settings"; // Import the SettingsModal component
+import supabase from "../config/supabaseClient";
 
-export default function Navbar({ handleThemeChange, theme }) {
+export default function Navbar({ handleThemeChange, theme}) {
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+
+  
 
   const themeBool = theme === "synthwave";
 
@@ -110,9 +113,11 @@ export default function Navbar({ handleThemeChange, theme }) {
         </div>
 
         <div className="navbar-end">
-          <a href="/login" className="btn btn-ghost mr-2">
-            Login
-          </a>
+          
+            <a href="/login" className="btn btn-ghost mr-2">
+              Login
+            </a>
+       
         </div>
       </div>
     </>

@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { optimizeResume, convertToPDF, convertToHTML } from "../lib/api";
+import React, { useState, useEffect } from 'react';
+import { optimizeResume, convertToPDF } from "../lib/api";
 import { getUserResume, uploadResume } from "../uils/userService";
 import {
   FaFileUpload,
@@ -16,8 +16,14 @@ import {
 } from "react-icons/fa";
 import Image from "next/image";
 import logo from "../logo.png";
-import { supabase } from "../config/supabaseClient";
+import supabase from "../config/supabaseClient";
 import { useRouter } from "next/navigation";
+import latexTemplate from './text';
+import Sidebar from '../components/Sidebar'; // Import the Sidebar component
+
+
+
+
 
 const Modal = ({ isOpen, onClose, title, children }) => {
   if (!isOpen) return null;
@@ -40,6 +46,8 @@ const Modal = ({ isOpen, onClose, title, children }) => {
   );
 };
 
+
+
 export default function OptimizePage() {
   const [resume, setResume] = useState(null);
   const [jobListing, setJobListing] = useState("");
@@ -53,21 +61,37 @@ export default function OptimizePage() {
   const [user, setUser] = useState(null);
   const [isOptimizing, setIsOptimizing] = useState(false);
   const [optimizedLatex, setOptimizedLatex] = useState("");
+  const [pdfUrl, setPdfUrl] = useState(null);
+  const [pdfError, setPdfError] = useState(null);
 
   const router = useRouter();
 
-  useEffect(() => {
-    fetchUserResume();
-    checkUser();
+  
 
-    let authListener;
-    if (supabase && supabase.auth) {
-      authListener = supabase.auth.onAuthStateChange((event, session) => {
-        setUser(session?.user ?? null);
-      });
-    } else {
-      console.error("Supabase client is not properly initialized");
-    }
+  useEffect(() => {
+    const fetchUserAndResume = async () => {
+      try {
+        const { data: { user: currentUser }, error: userError } = await supabase.auth.getUser();
+        if (userError) throw userError;
+        
+        console.log("Current user from auth:", currentUser);
+        setUser(currentUser);
+
+        if (currentUser) {
+          await fetchUserResume();
+          await checkUserPaymentStatus(currentUser.id); // Check payment status
+        }
+      } catch (error) {
+        console.error("Error fetching user or resume:", error);
+      }
+    };
+
+    fetchUserAndResume();
+ 
+    const { data: authListener } = supabase.auth.onAuthStateChange((event, session) => {
+      console.log("Auth state changed:", event, session?.user);
+      setUser(session?.user ?? null);
+    });
 
     return () => {
       if (authListener && authListener.unsubscribe) {
@@ -75,18 +99,6 @@ export default function OptimizePage() {
       }
     };
   }, []);
-
-  const checkUser = async () => {
-    try {
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
-      setUser(user);
-    } catch (error) {
-      console.error("Error checking user:", error);
-      setUser(null);
-    }
-  };
 
   const login = () => {
     router.push("/login");
@@ -102,8 +114,15 @@ export default function OptimizePage() {
   };
 
   const fetchUserResume = async () => {
-    const userResume = await getUserResume();
-    setResume(userResume);
+    if (user && user.id) {
+      try {
+        const userResume = await getUserResume(user.id);
+        setResume(userResume);
+      } catch (error) {
+        console.error("Error fetching user resume:", error);
+        // Handle error (e.g., show error message to user)
+      }
+    }
   };
 
   const handleResumeUpload = async (event) => {
@@ -111,22 +130,32 @@ export default function OptimizePage() {
     if (file && file.type === "application/pdf") {
       setIsUploading(true);
       try {
-        if (!user) {
-          throw new Error("User not logged in");
+        // Log the current user state
+        console.log("Current user state:", user);
+
+        if (!user || !user.id) {
+          throw new Error("User not authenticated or user ID is missing");
         }
+        
+        console.log("Uploading resume for user:", user.id);
+        
         await uploadResume(file, user.id);
         await fetchUserResume();
-        // Show success message
         alert("Resume uploaded successfully!");
       } catch (error) {
         console.error("Error uploading resume:", error);
-        // Show error message to user
-        alert(`Failed to upload resume: ${error.message}`);
+        let errorMessage = "Failed to upload resume";
+        if (error.message) {
+          errorMessage += `: ${error.message}`;
+        }
+        if (error.details) {
+          errorMessage += `\nDetails: ${error.details}`;
+        }
+        alert(errorMessage);
       } finally {
         setIsUploading(false);
       }
     } else {
-      // Show error for invalid file type
       alert("Please upload a PDF file.");
     }
   };
@@ -147,8 +176,16 @@ export default function OptimizePage() {
           existingResume: resume.content,
           jobListing: jobListing,
         });
-        setOptimizedLatex(optimizedResult);
-        setOptimizedResume(optimizedResult); // You might want to parse this or display differently
+        const data = await convertToPDF(optimizedResult, user.id);
+
+        const pdfUrl = data.pdfUrl;
+        const latexContent = data.latexContent
+       
+          localStorage.setItem('optimizedLatex', latexContent);
+       
+        
+        // Navigate to the new page with only the PDF URL
+        router.push(`/optimized-resume?pdf=${encodeURIComponent(pdfUrl)}`);
       } catch (error) {
         console.error("Error optimizing resume:", error);
         // Handle error (e.g., show error message to user)
@@ -159,38 +196,28 @@ export default function OptimizePage() {
     }
   };
 
-  const handleDownloadPDF = async () => {
-    if (!optimizedLatex) return;
+  const checkUserPaymentStatus = async (userId) => {
     try {
-      const pdfBlob = await convertToPDF(optimizedLatex);
-      const url = window.URL.createObjectURL(pdfBlob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = 'optimized_resume.pdf';
-      document.body.appendChild(a);
-      a.click();
-      window.URL.revokeObjectURL(url);
-    } catch (error) {
-      console.error('Failed to download PDF:', error);
-      // Handle error (e.g., show error message to user)
-    }
-  };
+      const { data: profile, error } = await supabase
+        .from("profiles")
+        .select("has_paid") // Assuming 'has_paid' is the field indicating payment status
+        .eq("id", userId)
+        .single();
 
-  const handleViewHTML = async () => {
-    if (!optimizedLatex) return;
-    try {
-      const htmlContent = await convertToHTML(optimizedLatex);
-      const newWindow = window.open();
-      newWindow?.document.write(htmlContent);
-      newWindow?.document.close();
+      if (error) throw error;
+
+      if (!profile?.has_paid) {
+        alert("You must have a paid subscription to access this page.");
+        router.push("/"); // Redirect to home or another page
+      }
     } catch (error) {
-      console.error('Failed to view HTML:', error);
-      // Handle error (e.g., show error message to user)
+      console.error("Error checking user payment status:", error);
     }
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-gradient-to-br from-blue-50 to-indigo-100">
+    <div className="min-h-screen flex flex-row bg-gradient-to-br from-blue-50 to-indigo-100">
+       <Sidebar /> 
       <div className="flex-grow flex flex-col py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl w-full mx-auto flex-grow flex flex-col">
           <div className="flex justify-between items-center mb-12">
@@ -281,7 +308,7 @@ export default function OptimizePage() {
                   Job Listing
                 </h2>
                 <textarea
-                  className="w-full h-full p-4 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
+                  className="w-full h-full p-4 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none text-white"
                   value={jobListing}
                   onChange={(e) => setJobListing(e.target.value)}
                   placeholder="Paste the job listing here"
@@ -371,33 +398,11 @@ export default function OptimizePage() {
               </button>
             </div>
           </Modal>
-
-          {optimizedLatex && (
-            <div className="mt-8 p-6 bg-white shadow-xl rounded-lg">
-              <h3 className="text-xl font-bold mb-4">Optimized Resume</h3>
-              <pre className="bg-gray-100 p-4 rounded-lg overflow-auto max-h-96">
-                {optimizedLatex}
-              </pre>
-              <div className="mt-4 flex space-x-4">
-                <button
-                  onClick={handleDownloadPDF}
-                  className="flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700"
-                >
-                  <FaFilePdf className="mr-2" />
-                  Download PDF
-                </button>
-                <button
-                  onClick={handleViewHTML}
-                  className="flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700"
-                >
-                  <FaFileCode className="mr-2" />
-                  View HTML
-                </button>
-              </div>
-            </div>
-          )}
         </div>
       </div>
     </div>
   );
 }
+
+
+

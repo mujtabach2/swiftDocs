@@ -5,6 +5,13 @@ const nextConfig = {
     unoptimized: true,
   },
   trailingSlash: true,
-}
+  webpack: (config) => {
+    config.resolve.alias.canvas = false;
+    return config;
+  },
+  experimental: {
+   
+  },
+};
 
 module.exports = nextConfig;

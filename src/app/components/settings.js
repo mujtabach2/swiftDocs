@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { supabase } from "../config/supabaseClient";
+import supabase  from "../config/supabaseClient";
 
 const SettingsModal = ({ isOpen, onClose }) => {
   const [user, setUser] = useState(null);
@@ -36,10 +36,9 @@ const SettingsModal = ({ isOpen, onClose }) => {
   const handleLogout = async () => {
     setLoading(true);
     try {
-      await supabase.auth.signOut();
+      await supabase.auth.signOut(); // Sign out from Supabase
       onClose(); // Close the modal after logout
-      // You might want to trigger a page reload or update the app state here
-      window.location.reload(); // This will reload the page, effectively redirecting to the logged-out state
+      window.location.reload(); // Reload the page to reflect the logged-out state
     } catch (error) {
       console.error("Failed to log out", error);
     }

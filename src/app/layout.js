@@ -1,6 +1,7 @@
+// src/app/layout.js
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { title } from "process";
+import ClientProviders from './ClientProviders';
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -25,7 +26,9 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <ClientProviders>
+        <body className={inter.className}>{children}</body>
+      </ClientProviders>
     </html>
   );
 }

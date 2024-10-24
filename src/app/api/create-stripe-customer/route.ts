@@ -23,7 +23,7 @@ export async function POST(request: Request) {
     // Check if user already has a Stripe customer ID
     const { data: profile, error } = await supabase
       .from("profiles")
-      .select("stripe_customer_id")
+      .select("stripe_customer_id, has_paid")
       .eq("id", user.id)
       .single();
 
@@ -46,10 +46,13 @@ export async function POST(request: Request) {
       },
     });
 
-    // Save the Stripe customer ID to the user's profile in Supabase
+    // Save the Stripe customer ID and set has_paid to false initially
     const { error: updateError } = await supabase
       .from("profiles")
-      .update({ stripe_customer_id: customer.id })
+      .update({ 
+        stripe_customer_id: customer.id,
+        has_paid: false
+      })
       .eq("id", user.id);
 
     if (updateError) {

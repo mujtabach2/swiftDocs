@@ -1,0 +1,175 @@
+%-------------------------
+% Resume in Latex
+% Author : Mujtaba Chaudhry
+%------------------------
+
+\documentclass[letterpaper,11pt]{article}
+
+\usepackage{latexsym}
+\usepackage[empty]{fullpage}
+\usepackage{titlesec}
+\usepackage{marvosym}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{verbatim}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+\usepackage{fancyhdr}
+\usepackage[english]{babel}
+\usepackage{tabularx}
+\usepackage{fontawesome}
+\input{glyphtounicode}
+
+
+%----------FONT OPTIONS----------
+% sans-serif
+% \usepackage[sfdefault]{FiraSans}
+% \usepackage[sfdefault]{roboto}
+% \usepackage[sfdefault]{noto-sans}
+% \usepackage[default]{sourcesanspro}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyfoot{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+
+% Adjust margins
+\addtolength{\oddsidemargin}{-0.5in}
+\addtolength{\evensidemargin}{-0.5in}
+\addtolength{\textwidth}{1in}
+\addtolength{\topmargin}{-.5in}
+\addtolength{\textheight}{1.0in}
+
+\urlstyle{same}
+
+\raggedbottom
+\raggedright
+\setlength{\tabcolsep}{0in}
+
+% Sections formatting
+\titleformat{\section}{
+  \vspace{-4pt}\scshape\raggedright\large
+}{}{0em}{}[\color{black}\titlerule \vspace{-5pt}]
+
+% Ensure that generate pdf is machine readable/ATS parsable
+\pdfgentounicode=1
+
+%-------------------------
+% Custom commands
+\newcommand{\resumeItem}[1]{
+  \item\small{
+    {#1 \vspace{-2pt}}
+  }
+}
+
+\newcommand{\resumeSubheading}[4]{
+  \vspace{-2pt}\item
+    \begin{tabular*}{0.97\textwidth}[t]{l@{\extracolsep{\fill}}r}
+      \textbf{#1} & #2 \\
+      \textit{\small#3} & \textit{\small #4} \\
+    \end{tabular*}\vspace{-7pt}
+}
+
+\newcommand{\resumeProjectHeading}[2]{
+    \item
+    \small #1 \textit{#2} \vspace{-5pt}
+}
+
+\newcommand{\resumeSubItem}[1]{\resumeItem{#1}\vspace{-4pt}}
+
+\renewcommand\labelitemii{$\vcenter{\hbox{\tiny$\bullet$}}$}
+
+\newcommand{\resumeSubHeadingListStart}{\begin{itemize}[leftmargin=0.15in, label={}]}
+\newcommand{\resumeSubHeadingListEnd}{\end{itemize}}
+\newcommand{\resumeItemListStart}{\begin{itemize}}
+\newcommand{\resumeItemListEnd}{\end{itemize}\vspace{-5pt}}
+
+%-------------------------------------------
+%%%%%%  RESUME STARTS HERE  %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+%----------HEADING----------
+
+\begin{center}
+    \textbf{\Huge \scshape Mujtaba Chaudhry} \\ \vspace{1pt}
+    \small \faPhone \ 437-450-2773 $|$ \faEnvelope \ \href{mailto:mujtabawaqas@gmail.com}{\underline{mujtabawaqas@gmail.com}} $|$ 
+    \faLinkedinSquare \ \href{https://linkedin.com/in/mujtaba-chaudhry/}{\underline{linkedin.com/in/mujtaba-chaudhry/}} $|$
+    \faGlobe \ \href{https://mujtabach.netlify.app}{\underline{mujtabach.netlify.app}}
+\end{center}
+
+%-----------EDUCATION-----------
+\section{Education}
+  \resumeSubHeadingListStart
+    \resumeSubheading
+      {Toronto Metropolitan University}{Toronto, ON}
+      {Bachelor of Science in Computer Science}{Expected May 2026}
+  \resumeSubHeadingListEnd
+
+%-----------PROJECTS-----------
+\section{Projects}
+  \resumeSubHeadingListStart
+    \resumeProjectHeading
+    {\textbf{Stock Analysis Platform} $|$ \href{https://github.com/mujtabach2/tradingSite}{\textcolor{blue}{GitHub}} $|$ \href{https://sharpetrade.netlify.app}{\textcolor{blue}{Website}}}{(Firebase, React, JavaScript, Python, FinRL, Pandas, Tailwind CSS)}
+        \resumeItemListStart
+            \resumeItem{Engineered a stock analysis platform with daily signals and real-time data insights, using React, Python, and Pandas for data manipulation.}
+            \resumeItem{Developed algorithms with  \textbf{70\% confidence} in stock prediction, leveraging historical data and machine learning.}
+            \resumeItem{Enhanced data accessibility through sentiment analysis integration, improving analysis accuracy.}
+            \resumeItem{Built an immersive interface that increased user engagement by \textbf{75\%}.}
+        \resumeItemListEnd
+
+    \resumeProjectHeading
+        {\textbf{AI Language Learning Tool} $|$ \href{https://github.com/mujtabach2/LangauageApp}{\textcolor{blue}{GitHub}} $|$ \href{https://intelli-chat.netlify.app}{\textcolor{blue}{Website}}} {(JavaScript, React, AI, NLP, Node.js, HTML/CSS)}
+        \resumeItemListStart
+          \resumeItem{Developed an AI-powered language learning tool with chat interaction in 15+ languages.}
+          \resumeItem{Integrated advanced NLP techniques, enhancing user experience and \textbf{doubling knowledge retention}.}
+          \resumeItem{Optimized user interface with React and Node.js, leading to a \textbf{25\%} increase in interaction time.}
+          \resumeItem{Implemented seamless API integration between Node.js and Python, reducing response time by \textbf{25\%}.}
+        \resumeItemListEnd
+
+    \resumeProjectHeading
+     {\textbf{Doctor Lookup Platform} $|$ \href{https://github.com/mujtabach2/PJ1Doc}{\textcolor{blue}{GitHub}} $|$ \href{https://healthconnect-8bm6.onrender.com/}{\textcolor{blue}{Website}}}{(JavaScript, React, HTML/CSS, MongoDB, Node.js, Selenium)}
+        \resumeItemListStart
+          \resumeItem{Developed a doctor lookup platform for 1000+ doctors, simplifying healthcare access using the MERN stack.}
+          \resumeItem{Led the integration of Selenium for data scraping, automating and reducing data collection time by \textbf{700\%}.}
+          \resumeItem{Enhanced user engagement by \textbf{20\%} through the introduction of an interactive map feature, and streamlined doctor search and review functionalities.}
+          \resumeItem{Collaborated with subcontractors to implement a secure user authentication system using Node Passport.}
+        \resumeItemListEnd
+
+    \resumeProjectHeading
+        {\textbf{AI Document Creation Platform} $|$ \href{https://swiftdocss.netlify.app/}{{\textcolor{blue}{Website}}}}{(JavaScript, React, Node.js, AI, HTML/CSS, Supabase, Docker, GCP)}
+        \resumeItemListStart
+          \resumeItem{Built an AI-powered platform that streamlined document creation, increasing user efficiency by \textbf{60\%}.}
+          \resumeItem{Integrated LaTeX generation using Docker and \textbf{GCP}, enabling seamless PDF compilation and scalable storage.}
+          \resumeItem{Developed customizable templates and AI-driven suggestions, enhancing productivity and document quality.}
+          \resumeItem{Resolved latency and scaling challenges by optimizing Docker container orchestration for high-demand usage, reducing pay-per-request costs and lowering RAM requirements by \textbf{50\%} on \textbf{GCP}.}
+        \resumeItemListEnd
+  \resumeSubHeadingListEnd
+
+
+%-----------EXPERIENCE-----------
+\section{Experience}
+  \resumeSubHeadingListStart
+    \resumeSubheading
+      {Indie Hacker}{Remote}
+      {Self-Employed}{May 2022 -- Present}
+      \resumeItemListStart
+        \resumeItem{Developed and launched innovative SaaS and web applications, targeting niche markets and user needs.}
+        \resumeItem{Led end-to-end product development within Agile teams, from ideation and design to deployment and user acquisition.}
+        \resumeItem{Increased user base by \textbf{1,500 users} and grew monthly recurring revenue by \textbf{40\%} within 6 months through targeted growth strategies.}
+        \resumeItem{Coordinated progress effectively with subcontractors and cross-functional teams in Agile, ensuring timely delivery of projects.}
+      \resumeItemListEnd
+  \resumeSubHeadingListEnd
+
+%-----------TECHNICAL SKILLS-----------
+\section{Technical Skills}
+ \begin{itemize}[leftmargin=0.15in, label={}]
+    \small{\item{
+     \textbf{Languages}{: Java, Python, C/C++, JavaScript, TypeScript, HTML/CSS, SQL} \\
+     \textbf{Frameworks}{: React, Node.js, Express.js, Flask, Bootstrap, WordPress, Material-UI, FastAPI} \\
+     \textbf{Developer Tools}{: Git, Docker, MongoDB, \textbf{Google Cloud Platform (GCP)}, Firebase, VS Code, Jupyter, Figma, Linux} \\
+     \textbf{Libraries}{: Pandas, NumPy, Matplotlib, OpenCV, STL, FinRL, Selenium, Bcrypt}
+    }}
+ \end{itemize}
+
+\end{document}

@@ -1,4 +1,4 @@
-import { supabase } from "../config/supabaseClient"; // Assuming you have a supabaseClient file
+import supabase  from "../config/supabaseClient"; // Assuming you have a supabaseClient file
 
 // Get user data by ID
 export async function getUserById(userId) {
@@ -57,59 +57,43 @@ export async function getAllUsers(page = 1, limit = 10) {
 }
 
 // Get user resume
-export async function getUserResume(userId) {
-  const { data, error } = await supabase.storage
+export const getUserResume = async (userId) => {
+  const { data, error } = await supabase
     .from('resumes')
-    .createSignedUrl(`${userId}.pdf`, 60); // Assumes PDF format
+    .select('*')
+    .eq('user_id', userId)
+    .order('created_at', { ascending: false })
+    .limit(1)
+    .single();
 
   if (error) throw error;
-  return data.signedUrl;
-}
+  return data;
+};
 
 // Upload user resume
 export const uploadResume = async (file, userId) => {
-  if (!file || !file.name) {
-    throw new Error("Invalid file object");
+  if (!userId) {
+    throw new Error("User ID is required");
   }
 
-  try {
-    // Use userId for file name, keeping the original extension
-    const fileExt = file.name.split('.').pop();
-    const fileName = `${userId}.${fileExt}`;
+  // Read file as ArrayBuffer
+  const arrayBuffer = await file.arrayBuffer();
+  // Convert ArrayBuffer to Base64
+  const base64String = btoa(
+    new Uint8Array(arrayBuffer).reduce((data, byte) => data + String.fromCharCode(byte), '')
+  );
 
-    // Check if a resume already exists
-    const { data: existingFile, error: existingError } = await supabase.storage
-      .from('resumes')
-      .list('', { prefix: userId });
+  const { data, error } = await supabase
+    .from('resumes')
+    .insert({
+      user_id: userId,
+      file_name: file.name,
+      content: base64String,
+    });
 
-    if (existingError) throw existingError;
-
-    // If a file exists, remove it
-    if (existingFile.length > 0) {
-      const { error: removeError } = await supabase.storage
-        .from('resumes')
-        .remove([existingFile[0].name]);
-
-      if (removeError) throw removeError;
-    }
-
-    // Upload new file to Supabase storage
-    const { data, error } = await supabase.storage
-      .from('resumes')
-      .upload(fileName, file);
-
-    if (error) throw error;
-
-    // Get public URL for the uploaded file
-    const { publicURL, error: urlError } = supabase.storage
-      .from('resumes')
-      .getPublicUrl(fileName);
-
-    if (urlError) throw urlError;
-
-    return { fileName, publicURL };
-  } catch (error) {
-    console.error("Error uploading resume:", error);
+  if (error) {
+    console.error("Supabase error:", error);
     throw error;
   }
+  return data;
 };

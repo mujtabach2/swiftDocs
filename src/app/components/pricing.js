@@ -1,8 +1,9 @@
-import { loadStripe } from "@stripe/stripe-js";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { useUser } from "@supabase/auth-helpers-react";
-import supabase from "../config/supabaseClient";
+import { loadStripe } from "@stripe/stripe-js";
+import supabase from "../config/supabaseClient"; // Make sure the path is correct
+
+const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY);
 
 const mapThemeColorToClass = (themeColor) => {
   if (themeColor === "synthwave") {
@@ -13,47 +14,81 @@ const mapThemeColorToClass = (themeColor) => {
 };
 
 export default function Pricing({ theme }) {
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true); // Loading state for user fetch
   const [loadingStates, setLoadingStates] = useState({
     "7-day-plan": false,
     "30-day-plan": false,
     "180-day-plan": false,
   });
   const router = useRouter();
-  const user = useUser();
+
+  // Fetch the current user using Supabase (similar to Sidebar logic)
+  useEffect(() => {
+    const fetchUser = async () => {
+      setLoading(true);
+      const { data, error } = await supabase.auth.getUser();
+      if (error) {
+        console.error("Error fetching user:", error);
+        setUser(null);
+      } else {
+        setUser(data.user);
+      }
+      setLoading(false);
+    };
+
+    fetchUser();
+
+    // Set up an auth state change listener
+    const { data: authListener } = supabase.auth.onAuthStateChange((event, session) => {
+      setUser(session?.user ?? null);
+    });
+
+    return () => {
+      authListener.subscription.unsubscribe();
+    };
+  }, []);
 
   const handlePurchase = async (planId) => {
+    if (loading) return; // Wait for loading to finish
+
+    // Redirect to login if user is not authenticated
     if (!user) {
-      // If user is not logged in, redirect to login page
+      console.log("User not logged in, redirecting to login.");
       router.push("/login?redirect=pricing");
       return;
     }
 
     setLoadingStates((prev) => ({ ...prev, [planId]: true }));
+
     try {
+      // Send a request to the API to create the checkout session
       const response = await fetch("/api/create-checkout-session", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ planId, userId: user.id }),
+        body: JSON.stringify({ planId }), // User ID will be derived from session on the server
+        credentials: "same-origin", // Ensure cookies are sent
       });
 
-      const data = await response.json();
-
       if (!response.ok) {
-        throw new Error(data.error || "Failed to create checkout session");
+        const errorData = await response.json();
+        throw new Error(errorData.error || "Failed to create checkout session");
       }
 
-      const stripe = await loadStripe(
-        "pk_test_51PT461C6lJGJP4oFShOe5SVTzrfvkXNerhhAAgFc4JAphIsCZsMvxyahF32oYA63Be8c3vM65lSF6vzcGjFL3RDp00S9ZLeVq7",
-      );
+      const { sessionId } = await response.json();
+
+      // Load the Stripe.js instance and redirect to the checkout page
+      const stripe = await stripePromise;
+
       if (stripe) {
-        await stripe.redirectToCheckout({ sessionId: data.sessionId });
+        await stripe.redirectToCheckout({ sessionId });
       } else {
         throw new Error("Failed to load Stripe");
       }
     } catch (error) {
-      console.error("Error:", error);
+      console.error("Error in handlePurchase:", error);
       alert(`An error occurred: ${error.message}`);
     } finally {
       setLoadingStates((prev) => ({ ...prev, [planId]: false }));

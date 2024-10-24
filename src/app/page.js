@@ -1,7 +1,9 @@
 "use client";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { useUser } from "./hooks/UserContext"; // Import the useUser hook
 import supabase from "./config/supabaseClient";
 import Navbar from "./components/navbar";
-import { useEffect, useState } from "react";
 import Main from "./components/main";
 import Pricing from "./components/pricing";
 import Footer from "./components/footer";
@@ -11,9 +13,10 @@ import ValueProp from "./components/valueProp";
 import Testimonial from "./components/testimonial";
 import FinalCTA from "./components/cta";
 import ChatModal from "./components/chatModal";
-import { useRouter } from "next/navigation";
+import Countdown from "react-countdown";
+
 export default function Home() {
-  console.log(supabase);
+  const { user, loading } = useUser(); // Use the user context
   const [theme, setTheme] = useState("mytheme");
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
@@ -23,28 +26,28 @@ export default function Home() {
   const closeSettings = () => setIsSettingsOpen(false);
 
   useEffect(() => {
-    const checkAuth = async () => {
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
-      if (user) {
-        router.push("/optimize");
-      }
-    };
+    // Check if user is loading
+    if (loading) return;
 
-    checkAuth();
+    // If user is not authenticated, redirect to login
+    if (!user) {
+      //router.push("/login");
+    }
+
     document.querySelector("body").setAttribute("data-theme", theme);
-  }, [theme, router]);
+  }, [theme, user, loading, router]);
 
   const toggleTheme = () => {
     setTheme((prevTheme) =>
-      prevTheme === "mytheme" ? "synthwave" : "mytheme",
+      prevTheme === "mytheme" ? "synthwave" : "mytheme"
     );
   };
 
   const toggleChat = () => {
     setIsChatOpen(!isChatOpen);
   };
+
+  const targetDate = new Date("2024-10-08T00:00:00-04:00").getTime(); // EST
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -55,7 +58,6 @@ export default function Home() {
         <Trusted />
         <ValueProp theme={theme} />
         <Features />
-        {/* <Video /> */}
         <section id="pricing" className="w-full">
           <Pricing theme={theme} />
         </section>
@@ -72,8 +74,6 @@ export default function Home() {
           </button>
         )}
 
-        {/* Settings button */}
-
         {/* Chat window */}
         <ChatModal isOpen={isChatOpen} onClose={() => setIsChatOpen(false)} />
       </main>
@@ -81,15 +81,4 @@ export default function Home() {
       <Footer />
     </div>
   );
-
-  // layout
-  // header
-  // hero
-  // value prop
-  // features
-  // video
-  // pricing
-  // testimonials
-  // cta
-  //footer
 }
