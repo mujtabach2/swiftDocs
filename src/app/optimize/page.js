@@ -234,34 +234,7 @@ export default function OptimizePage() {
               </h1>
             </div>
             <div className="flex items-center space-x-4">
-              {user ? (
-                <>
-                  <span className="text-green-600 font-semibold">
-                    Logged In
-                  </span>
-                  <button
-                    onClick={() => router.push("/settings")}
-                    className="bg-gray-200 p-2 rounded-full hover:bg-gray-300 transition duration-300"
-                  >
-                    <FaCog className="text-gray-600" />
-                  </button>
-                  <button
-                    onClick={logout}
-                    className="flex items-center bg-red-500 text-white px-4 py-2 rounded-full hover:bg-red-600 transition duration-300"
-                  >
-                    <FaSignOutAlt className="mr-2" />
-                    Logout
-                  </button>
-                </>
-              ) : (
-                <button
-                  onClick={login}
-                  className="flex items-center bg-green-500 text-white px-4 py-2 rounded-full hover:bg-green-600 transition duration-300"
-                >
-                  <FaSignInAlt className="mr-2" />
-                  Login
-                </button>
-              )}
+             
             </div>
           </div>
 

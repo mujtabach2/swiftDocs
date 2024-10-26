@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import logo from "../logo.png";
+import logo from "../../../public/logo.png"
 import Image from "next/image";
 import { scrollToPricing } from "../uils/scrollTo";
 import SettingsModal from "./settings"; // Import the SettingsModal component
@@ -53,21 +53,11 @@ export default function Navbar({ handleThemeChange, theme}) {
               <li>
                 <a onClick={scrollHome}>Home</a>
               </li>
-              <li>
-                <a>Examples</a>
-              </li>
+             
               <li>
                 <a onClick={scrollToPricing}>Pricing</a>
               </li>
-              <li>
-                <a>Features</a>
-              </li>
-              <li>
-                <a>About</a>
-              </li>
-              <li>
-                <a>Contact</a>
-              </li>
+      
               <li>
                 <label className="swap swap-rotate ">
                   {/* Hidden checkbox controls the state */}
@@ -121,5 +111,5 @@ export default function Navbar({ handleThemeChange, theme}) {
         </div>
       </div>
     </>
-  );
+  ); 
 }

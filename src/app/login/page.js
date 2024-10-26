@@ -5,6 +5,7 @@ import supabase from "../config/supabaseClient";
 import logo from "../logo.png";
 import Image from "next/image";
 
+
 const metadata = {
   title: "Login",
   description: "Login to access your account",

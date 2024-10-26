@@ -14,7 +14,7 @@ const Testimonial = ({ theme }) => {
   };
 
   return (
-    <section className="py-12 sm:py-20 bg-base-100 my-8 sm:my-16">
+    <section className="w-[100vw] py-12 sm:py-20 bg-base-100 my-8 sm:my-16 bg-gradient-to-r from-blue-50 to-indigo-50 py-20 rounded-[50px]">
       <div className="container mx-auto px-4">
         <h2 className="text-3xl sm:text-4xl font-bold text-center mb-8 sm:mb-16 text-base-content">
           What Our Users Say

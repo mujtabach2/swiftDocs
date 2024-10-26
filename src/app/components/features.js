@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
-import logo from "../logo.png";
 import { scrollToPricing } from "../uils/scrollTo";
 
 export default function Features() {

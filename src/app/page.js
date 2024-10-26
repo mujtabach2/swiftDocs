@@ -1,8 +1,7 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useRouter } from "next/navigation";
-import { useUser } from "./hooks/UserContext"; // Import the useUser hook
-import supabase from "./config/supabaseClient";
+import { useUser } from "./hooks/UserContext";
 import Navbar from "./components/navbar";
 import Main from "./components/main";
 import Pricing from "./components/pricing";
@@ -11,58 +10,145 @@ import Features from "./components/features";
 import Trusted from "./components/trusted";
 import ValueProp from "./components/valueProp";
 import Testimonial from "./components/testimonial";
-import FinalCTA from "./components/cta";
+import imgCTA from "./components/ctaimg";
+import FinalCTA from "./components/cta"
 import ChatModal from "./components/chatModal";
 import Countdown from "react-countdown";
+import { motion } from "framer-motion";
+import { useInView } from "./hooks/inView"; 
+import ResumeSteps from "./components/resumeSteps"
+import Advantages from "./components/advantages"
 
 export default function Home() {
-  const { user, loading } = useUser(); // Use the user context
+  const { user, loading } = useUser();
   const [theme, setTheme] = useState("mytheme");
   const [isChatOpen, setIsChatOpen] = useState(false);
-  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const router = useRouter();
 
-  const openSettings = () => setIsSettingsOpen(true);
-  const closeSettings = () => setIsSettingsOpen(false);
+  // Create refs for each section
+  const mainRef = useRef(null);
+  const trustedRef = useRef(null);
+  const valuePropRef = useRef(null);
+  const featuresRef = useRef(null);
+  const pricingRef = useRef(null);
+  const testimonialRef = useRef(null);
+  const finalCTARef = useRef(null);
+
+  // Intersection Observer to detect when sections come into view
+  const isMainInView = useInView(mainRef);
+  const isTrustedInView = useInView(trustedRef);
+  const isValuePropInView = useInView(valuePropRef);
+  const isFeaturesInView = useInView(featuresRef);
+  const isPricingInView = useInView(pricingRef);
+  const isTestimonialInView = useInView(testimonialRef);
+  const isFinalCTAInView = useInView(finalCTARef);
 
   useEffect(() => {
-    // Check if user is loading
-    if (loading) return;
-
-    // If user is not authenticated, redirect to login
-    if (!user) {
-      //router.push("/login");
+    if (!loading && user) {
+      router.push("/optimize");
     }
+  }, [loading, user, router]);
 
+  useEffect(() => {
     document.querySelector("body").setAttribute("data-theme", theme);
-  }, [theme, user, loading, router]);
+  }, [theme]);
 
   const toggleTheme = () => {
-    setTheme((prevTheme) =>
-      prevTheme === "mytheme" ? "synthwave" : "mytheme"
-    );
+    setTheme((prevTheme) => (prevTheme === "mytheme" ? "synthwave" : "mytheme"));
   };
 
   const toggleChat = () => {
     setIsChatOpen(!isChatOpen);
   };
 
-  const targetDate = new Date("2024-10-08T00:00:00-04:00").getTime(); // EST
+  const fadeInVariant = {
+    hidden: { opacity: 0, y: 50 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
+  };
 
   return (
-    <div className="flex flex-col min-h-screen">
-      <main className="flex-grow flex flex-col items-center p-4 sm:p-8 md:p-16 lg:p-24">
+    <div className={`flex flex-col min-h-screen ${theme ? theme : ""}`}>
+      <main className="flex-grow flex flex-col items-center  p-4 sm:p-8 md:p-16 lg:p-24">
         <Navbar handleThemeChange={toggleTheme} theme={theme} />
 
-        <Main />
-        <Trusted />
-        <ValueProp theme={theme} />
-        <Features />
-        <section id="pricing" className="w-full">
+        {/* Sections with scroll-triggered animations */}
+        <motion.div
+          ref={mainRef}
+          initial="hidden"
+          animate={isMainInView ? "visible" : "hidden"}
+          variants={fadeInVariant}
+        >
+          <Main />
+        </motion.div>
+
+        <motion.div
+          ref={trustedRef}
+          initial="hidden"
+          animate={isTrustedInView ? "visible" : "hidden"}
+          variants={fadeInVariant}
+        >
+          <Trusted />
+        </motion.div>
+
+        <motion.div
+          ref={valuePropRef}
+          initial="hidden"
+          animate={isValuePropInView ? "visible" : "hidden"}
+          variants={fadeInVariant}
+        >
+          <ValueProp theme={theme} />
+        </motion.div>
+
+        <ResumeSteps/>
+
+          <Advantages />
+       
+        <motion.section
+          ref={pricingRef}
+          id="pricing"
+          initial="hidden"
+          animate={isPricingInView ? "visible" : "hidden"}
+          variants={fadeInVariant}
+        >
           <Pricing theme={theme} />
-        </section>
-        <Testimonial theme={theme} />
-        <FinalCTA />
+        </motion.section>
+
+        <motion.div
+          ref={testimonialRef}
+          initial="hidden"
+          animate={isTestimonialInView ? "visible" : "hidden"}
+          variants={fadeInVariant}
+        >
+          <Testimonial theme={theme} />
+        </motion.div>
+
+        <motion.div
+          ref={finalCTARef}
+          initial="hidden"
+          animate={isFinalCTAInView ? "visible" : "hidden"}
+          variants={fadeInVariant}
+        >
+        
+          <FinalCTA />
+          
+        </motion.div>
+        <section 
+  className="sm:py-24 bg-base-100 pb-[-10vh] mb-[-13vh] mt-[-20vh] relative w-[100vw] "
+>
+  <img 
+    src="/left.svg" 
+    alt="Left decoration" 
+    className="absolute bottom-0 left-0 w-2/6 hidden sm:block" 
+    style={{ zIndex: 0 }} 
+  />
+  <img 
+    src="/right.svg" 
+    alt="Right decoration" 
+    className="absolute bottom-0 right-0 w-2/6 hidden sm:block" 
+    style={{ zIndex: 0 }} 
+  />
+</section>
+
 
         {/* Chat button */}
         {!isChatOpen && (

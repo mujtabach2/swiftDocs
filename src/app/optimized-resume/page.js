@@ -4,10 +4,12 @@ import React, { useState, useEffect, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import dynamic from 'next/dynamic';
 import { FaSync } from "react-icons/fa";
-import { convertToPDF } from "../lib/api";
 import supabase from "../config/supabaseClient";
+import Sidebar from '../components/Sidebar';
+import { convertToPDF } from "../lib/api";
 import latexTemplate from '../optimize/text';
 
+// Dynamically import MonacoEditor without SSR
 const MonacoEditor = dynamic(() => import('@monaco-editor/react'), { ssr: false });
 
 function SearchParamsWrapper() {
@@ -19,21 +21,19 @@ function SearchParamsWrapper() {
 
   useEffect(() => {
     const storedLatex = localStorage.getItem('optimizedLatex');
-    setOptimizedLatex(storedLatex)
+    setOptimizedLatex(storedLatex || latexTemplate);
 
-    // Extract pdf and latex from search params
+    // Extract pdf from search params
     const pdfParam = searchParams.get('pdf') || '';
-  
-
     setPdfUrl(pdfParam);
 
+    // Decode LaTeX content if available
+    const latexContent = searchParams.get('latex') || '';
     try {
-      // Attempt to decode the latex content
       setOptimizedLatex(decodeURIComponent(latexContent)); 
     } catch (error) {
       console.error("Error decoding latex content:", error);
-      // Optionally set a default value or handle the error
-      setOptimizedLatex(""); // or any default value you prefer
+      setOptimizedLatex(latexTemplate); // Fallback to default template
     }
   }, [searchParams]);
 
@@ -55,10 +55,10 @@ function SearchParamsWrapper() {
     setIsGenerating(true);
     try {
       const data = await convertToPDF(optimizedLatex, user.id);
-      console.log(newPdfUrl, newLatex) 
       setPdfUrl(data.pdfUrl);
-      setOptimizedLatex(data.latexContent)
-      console.log("New PDF URL:", newPdfUrl);
+      setOptimizedLatex(data.latexContent);
+      localStorage.setItem('optimizedLatex', data.latexContent);
+      console.log("New PDF URL:", data.pdfUrl);
     } catch (error) {
       console.error('Failed to generate new PDF:', error);
     } finally {
@@ -67,76 +67,89 @@ function SearchParamsWrapper() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-100 to-indigo-200 py-12 px-4 sm:px-6 lg:px-8">
-      
-      <div className="max-w-7xl mx-auto">
-        <h1 className="text-4xl font-bold text-gray-900 mb-8 text-center">Optimized Resume</h1>
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          <div className="bg-white rounded-lg shadow-lg p-6">
-            <h2 className="text-2xl font-semibold mb-4 text-gray-800">LaTeX Code</h2>
-            <div className="border rounded-lg overflow-hidden">
-              <MonacoEditor
-                height="550px"
-                language="latex"
-                theme="vs-dark"
-                value={latexTemplate}
-                onChange={setOptimizedLatex}
-                options={{
-                  minimap: { enabled: false },
-                  scrollBeyondLastLine: false,
-                  wordWrap: 'on',
-                }}
-              />
+    <div className="flex min-h-screen bg-gray-100">
+      {/* Sidebar */}
+      <Sidebar user={user} />
+
+      {/* Main Content */}
+      <main className="flex-1 p-6 overflow-y-auto">
+        <div className="max-w-7xl text-center mx-auto">
+          <h1 className="text-4xl font-bold text-gray-800 mb-8 animate-fade-in">Optimized Resume</h1>
+          
+          {/* Content Grid */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 h-[80vh]">
+            {/* LaTeX Editor */}
+            <div className="bg-white rounded-lg shadow-md p-6 transform transition duration-300 hover:shadow-lg animate-fade-in">
+              <h2 className="text-2xl font-semibold mb-4 text-gray-700">LaTeX Code</h2>
+              <div className="border rounded-lg overflow-hidden">
+                <MonacoEditor
+                  height="70vh"
+                  language="latex"
+                  theme="vs-dark"
+                  value={optimizedLatex}
+                  onChange={(value) => setOptimizedLatex(value)}
+                  options={{
+                    minimap: { enabled: false },
+                    scrollBeyondLastLine: false,
+                    wordWrap: 'on',
+                  }}
+                />
+              </div>
+            </div>
+
+            {/* PDF Preview */}
+            <div className="bg-white rounded-lg shadow-md p-6 transform transition duration-300 hover:shadow-lg animate-fade-in">
+              <h2 className="text-2xl font-semibold mb-4 text-gray-700">PDF Preview</h2>
+              {pdfUrl ? (
+                <iframe
+                  src={pdfUrl}
+                  className="w-full h-[70vh] border rounded-lg"
+                  title="PDF Preview"
+                />
+              ) : (
+                <div className="w-full h-[400px] flex items-center justify-center border rounded-lg bg-gray-50 text-gray-500">
+                  PDF URL is not available
+                </div>
+              )}
             </div>
           </div>
-          <div className="bg-white rounded-lg shadow-lg p-6">
-            <h2 className="text-2xl font-semibold mb-4 text-gray-800">PDF Preview</h2>
-            {pdfUrl ? (
-              <iframe
-                src={pdfUrl}
-                className="w-full h-[550px] border rounded-lg"
-                title="PDF Preview"
-              />
-            ) : (
-              <div className="w-full h-[550px] flex items-center justify-center border rounded-lg bg-gray-100 text-gray-500">
-                PDF URL is not available
-              </div>
-            )}
+
+          {/* Action Buttons */}
+          <div className="mt-8 flex justify-center space-x-4">
+            <button
+              onClick={handleGenerateAgain}
+              className={`flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 transition duration-200 ease-in-out shadow-md 
+                ${isGenerating ? "opacity-50 cursor-not-allowed" : "focus:outline-none focus:ring-2 focus:ring-blue-500"}`}
+              disabled={isGenerating}
+            >
+              {isGenerating ? (
+                <>
+                  <FaSync className="animate-spin mr-2" />
+                  Generating...
+                </>
+              ) : (
+                <>
+                  <FaSync className="mr-2" />
+                  Generate Again
+                </>
+              )}
+            </button>
+            <button
+              onClick={() => window.history.back()}
+              className="flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-gray-600 hover:bg-gray-700 transition duration-200 ease-in-out shadow-md focus:outline-none focus:ring-2 focus:ring-gray-500"
+            >
+              Back
+            </button>
           </div>
         </div>
-        <div className="mt-8 flex justify-center space-x-4">
-          <button
-            onClick={handleGenerateAgain}
-            className="flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 transition duration-150 ease-in-out shadow-md"
-            disabled={isGenerating}
-          >
-            {isGenerating ? (
-              <>
-                <FaSync className="animate-spin mr-2" />
-                Generating...
-              </>
-            ) : (
-              <>
-                <FaSync className="mr-2" />
-                Generate Again
-              </>
-            )}
-          </button>
-          <button
-            onClick={() => window.history.back()}
-            className="flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-gray-600 hover:bg-gray-700 transition duration-150 ease-in-out shadow-md"
-          >
-            Back
-          </button>
-        </div>
-      </div>
+      </main>
     </div>
   );
 }
 
 export default function OptimizedResumePage() {
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<div className="flex items-center justify-center min-h-screen">Loading...</div>}>
       <SearchParamsWrapper />
     </Suspense>
   );

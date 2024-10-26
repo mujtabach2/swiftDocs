@@ -1,45 +1,144 @@
+import { useState } from 'react';
+
 export default function Footer() {
+  const [activeModal, setActiveModal] = useState(null);
+
   const footerSections = [
     {
       title: "Services",
-      links: ["Branding", "Design", "Marketing", "Advertisement"],
+      links: ["Resume Optimization"],
     },
-    { title: "Company", links: ["About us", "Contact", "Jobs", "Press kit"] },
+    { title: "Company", links: ["About Us","Contact"] },
     {
       title: "Legal",
-      links: ["Terms of use", "Privacy policy", "Cookie policy"],
+      links: ["Terms of Service", "Privacy Policy", "Cookie Policy"],
     },
   ];
 
+  const modalContent = {
+    "Resume Optimization": (
+      <div>
+        <p>Our AI-powered Resume Optimization service helps you create a standout resume that catches employers' attention.</p>
+        <ul className="list-disc list-inside mt-2">
+          <li>AI-driven keyword optimization</li>
+          <li>Industry-specific formatting</li>
+          <li>Personalized content suggestions</li>
+          <li>ATS-friendly templates</li>
+        </ul>
+      </div>
+    ),
+    "About Us": (
+      <div>
+        <p>SwiftDocs is a cutting-edge AI company dedicated to revolutionizing the job application process.</p>
+        <p className="mt-2">Founded in 2024, we've helped thousands of job seekers land their dream roles by leveraging the power of artificial intelligence in resume creation and optimization.</p>
+      </div>
+    ),
+    "Contact": (
+      <div>
+        <p>Get in touch with us:</p>
+        <ul className="list-none mt-2">
+          <li>Email: support@swiftdocs.ai</li>
+        
+        </ul>
+      </div>
+    ),
+    "Terms of Service": (
+      <div>
+        <p>By using SwiftDocs, you agree to our Terms of Service, which include:</p>
+        <ul className="list-disc list-inside mt-2">
+          <li>Acceptable use of our AI tools</li>
+          <li>User account responsibilities</li>
+          <li>Intellectual property rights</li>
+          <li>Limitation of liability</li>
+        </ul>
+        <p className="mt-2">For the full Terms of Service, please visit our website.</p>
+      </div>
+    ),
+    "Privacy Policy": (
+      <div>
+        <p>At SwiftDocs, we take your privacy seriously. Our Privacy Policy covers:</p>
+        <ul className="list-disc list-inside mt-2">
+          <li>What personal information we collect</li>
+          <li>How we use your data</li>
+          <li>Data protection measures</li>
+          <li>Your rights regarding your personal information</li>
+        </ul>
+        <p className="mt-2">For the complete Privacy Policy, please visit our website.</p>
+      </div>
+    ),
+    "Cookie Policy": (
+      <div>
+        <p>Our Cookie Policy explains how we use cookies and similar technologies:</p>
+        <ul className="list-disc list-inside mt-2">
+          <li>Types of cookies we use</li>
+          <li>Purpose of each cookie</li>
+          <li>How to manage or disable cookies</li>
+          <li>Third-party cookies</li>
+        </ul>
+        <p className="mt-2">For more details on our Cookie Policy, please visit our website.</p>
+      </div>
+    ),
+  };
+
+  const handleLinkClick = (link) => {
+    setActiveModal(link);
+  };
+
+  const closeModal = () => {
+    setActiveModal(null);
+  };
+  
   return (
-    <footer className="footer w-full p-10 mt-10 bg-base-200 text-base-content">
-      <aside className="flex items-center">
-        <svg
-          width="50"
-          height="50"
-          viewBox="0 0 24 24"
-          xmlns="http://www.w3.org/2000/svg"
-          className="fill-current"
-        >
-          {/* SVG path shortened for brevity */}
-          <path d="M22.672 15.226l-2.432.811.841 2.515c.33 1.019-.209 2.127-1.23 2.456-1.15.325-2.148-.321-2.463-1.226l-.84-2.518-5.013 1.677.84 2.517c.391 1.203-.434 2.542-1.831 2.542-.88 0-1.601-.564-1.86-1.314l-.842-2.516-2.431.809c-1.135.328-2.145-.317-2.463-1.229-.329-1.018.211-2.127 1.231-2.456l2.432-.809-1.621-4.823-2.432.808c-1.355.384-2.558-.59-2.558-1.839 0-.817.509-1.582 1.327-1.846l2.433-.809-.842-2.515c-.33-1.02.211-2.129 1.232-2.458 1.02-.329 2.13.209 2.461 1.229l.842 2.515 5.011-1.677-.839-2.517c-.403-1.238.484-2.553 1.843-2.553.819 0 1.585.509 1.85 1.326l.841 2.517 2.431-.81c1.02-.33 2.131.211 2.461 1.229.332 1.018-.21 2.126-1.23 2.456l-2.433.809 1.622 4.823 2.433-.809c1.242-.401 2.557.484 2.557 1.838 0 .819-.51 1.583-1.328 1.847m-8.992-6.428l-5.01 1.675 1.619 4.828 5.011-1.674-1.62-4.829z" />
-        </svg>
-        <p className="ml-4">
-          ACME Industries Ltd.
-          <br />
-          Providing reliable tech since 1992
-        </p>
-      </aside>
-      {footerSections.map((section) => (
-        <nav key={section.title}>
-          <h6 className="footer-title">{section.title}</h6>
-          {section.links.map((link) => (
-            <a key={link} className="link link-hover">
-              {link}
-            </a>
-          ))}
-        </nav>
-      ))}
+    <footer className="w-full p-10 pt-[5vh] bg-gray-300 text-base-content overflow-hidden ressd">
+         <style jsx>{`
+     
+     @media (max-width: 768px) {
+         .ressd {
+           margin-top: 50vh;
+         }
+           }
+
+
+    `}</style>
+      
+      <div className="flex flex-wrap justify-between items-start max-w-screen-xl mx-auto space-y-6 lg:space-y-0 lg:space-x-8">
+        <aside className="flex flex-col items-start w-full lg:w-auto">
+          <div className="flex items-center justify-content space-x-2 mb-2">
+            <img src="/logo.png" className="h-10"/>
+            <span className="text-xl font-bold">SwiftDocs</span>
+          </div>
+          <p className="text-xl">
+            Optimizing resumes with AI since 2024
+          </p>
+        </aside>
+        {footerSections.map((section) => (
+          <nav key={section.title} className="w-full lg:w-auto">
+            <h6 className="font-semibold text-lg mb-2">{section.title}</h6>
+            {section.links.map((link) => (
+              <a
+                key={link}
+                className="block link-hover text-gray-700 cursor-pointer"
+                onClick={() => handleLinkClick(link)}
+              >
+                {link}
+              </a>
+            ))}
+          </nav>
+        ))}
+      </div>
+
+      <input type="checkbox" id="my-modal" className="modal-toggle" checked={!!activeModal} onChange={closeModal} />
+      <div className="modal">
+        <div className="modal-box">
+          <h3 className="font-bold text-lg">{activeModal}</h3>
+          <div className="py-4">
+            {activeModal && modalContent[activeModal]}
+          </div>
+          <div className="modal-action">
+            <label htmlFor="my-modal" className="btn" onClick={closeModal}>Close</label>
+          </div>
+        </div>
+      </div>
     </footer>
   );
 }

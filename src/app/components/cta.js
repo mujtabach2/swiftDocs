@@ -1,10 +1,11 @@
 import React from "react";
 import Link from "next/link";
 import { scrollToPricing } from "../uils/scrollTo";
+
 const FinalCTA = () => {
   return (
-    <section className="py-16 sm:py-24 bg-base-100 my-8 sm:my-16">
-      <div className="container mx-auto px-4 text-center">
+    <section className="py-16 sm:py-24 bg-base-100 my-8 sm:my-16 relative w-[100vw]">
+      <div className="container mx-auto px-4 text-center" style={{ zIndex: 5 }} >
         <h2 className="text-3xl sm:text-5xl font-bold mb-4 sm:mb-8 text-base-content">
           Get More Interviews Today
         </h2>
@@ -23,7 +24,7 @@ const FinalCTA = () => {
           Limited Time Free Trial Available
         </p>
       </div>
-    </section>
+      </section>
   );
 };
 

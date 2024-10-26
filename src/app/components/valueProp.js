@@ -3,6 +3,7 @@ import Link from "next/link";
 import { FaRobot, FaChartLine, FaUserTie } from "react-icons/fa";
 import { scrollToPricing } from "../uils/scrollTo";
 
+
 const ValueProp = ({ theme }) => {
   const features = [
     {
@@ -26,44 +27,50 @@ const ValueProp = ({ theme }) => {
   ];
 
   return (
-    <section className="py-12 sm:py-20 bg-base-100 my-8 sm:my-16">
-      <div className="container mx-auto px-4">
-        <h2 className="text-3xl sm:text-4xl font-bold text-center mb-8 sm:mb-16 text-base-content">
-          Supercharge Your Job Search with AI
-        </h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 sm:gap-12 mb-8 sm:mb-16">
-          {features.map((feature, index) => (
-            <div key={index} className="text-center flex flex-col items-center">
-              <div className="text-[#00Fa9a] flex justify-center items-center mb-4 sm:mb-6">
-                {React.cloneElement(feature.icon, {
-                  className: "text-4xl sm:text-5xl mb-4",
-                })}
-              </div>
-              <h3 className="text-xl sm:text-2xl font-semibold mb-2 sm:mb-4 text-base-content">
-                {feature.title}
-              </h3>
-              <p className="text-sm sm:text-base text-base-content opacity-70">
-                {feature.description}
-              </p>
-            </div>
-          ))}
+    <section className="w-[100vw] sm:py-20 bg-base-100 rounded-[50px] sm:my-0 mb-0 pb-10 sm:pb-20 bg-sky-100">
+    <div className="container mx-auto px-4">
+      <div className="flex flex-col md:flex-row justify-between sm:mb-20">
+        <div className="flex flex-col md:w-1/2 md:pr-8 mt-10 sm:mt-[10vh]">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-center md:text-left mb-6 sm:mb-8 text-base-content">
+            Supercharge Your Job Search with AI
+          </h2>
+          <h4 className="text-base sm:text-lg md:text-xl text-center md:text-left mb-6 sm:mb-8 text-base-content">
+            Creating a job-winning resume can be a daunting task. Our resume builder makes it as easy as filling in the blanks. AI takes it a step further and fills in the blanks for you.
+          </h4>
+          <div className="mb-12 text-center sm:mb-20"> {/* Added margin for extra gap */}
+            <button
+              onClick={scrollToPricing}
+              className="btn bg-[#00Fa9a] hover:bg-[#00Fa9a]/80 text-black border-none btn-lg text-base md:text-lg px-4 sm:px-6 md:px-12"
+            >
+              Optimize Resume
+            </button>
+          </div>
         </div>
-        <div className="text-center mt-8 sm:mt-12">
-          <p className="text-lg sm:text-xl mb-6 sm:mb-8 text-base-content">
-            Don't let your dream job slip away. Our AI-powered tool gives you
-            the edge over other applicants.
-          </p>
-
-          <button
-            onClick={scrollToPricing}
-            className="btn bg-[#00Fa9a] hover:bg-[#00Fa9a]/80 text-black border-none btn-lg text-lg sm:text-xl px-6 sm:px-12 py-2 sm:py-4"
-          >
-            Start Optimizing My Resume
-          </button>
+        <div className="hidden md:block md:w-1/2 mb-0">
+          <img src="/car.svg" alt="AI-powered resume builder" className="w-full h-auto"/>
         </div>
       </div>
-    </section>
-  );
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 sm:gap-14 mb-10 sm:mb-16">
+        {features.map((feature, index) => (
+          <div key={index} className="text-center flex flex-col items-center">
+            <div className="text-[#00Fa9a] flex justify-center items-center mb-4">
+              {React.cloneElement(feature.icon, {
+                className: "text-3xl sm:text-4xl md:text-5xl mb-4",
+              })}
+            </div>
+            <h3 className="text-base sm:text-xl md:text-2xl font-semibold mb-2 text-base-content">
+              {feature.title}
+            </h3>
+            <p className="text-xs sm:text-sm md:text-base text-base-content opacity-70">
+              {feature.description}
+            </p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+  
+   );
 };
 
 export default ValueProp;

@@ -24,6 +24,6 @@
     "**/*.ts",
     "**/*.tsx",
     "src/app/hooks/useUser.js"
-, "src/app/components/payment-success/page.js"  ],
+, "src/app/components/payment-success/page.js", "src/app/analytics/analytics.js"  ],
   "exclude": ["node_modules"]
 }
