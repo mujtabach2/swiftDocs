@@ -1,5 +1,5 @@
-const API_BASE_URL = 'https://latex-compiler-1067457245892.us-central1.run.app'; // Adjust this to your backend URL
-
+const API_BASE_URL1 = 'https://latex-compiler-1067457245892.us-central1.run.app'; // Adjust this to your backend URL
+const API_BASE_URL = "http://localhost:8080"
 export interface ResumeOptimizationInput {
   existingResume: string | File;
   jobListing: string;
@@ -18,6 +18,7 @@ export const optimizeResume = async (input: ResumeOptimizationInput): Promise<st
     const sanitizedInput = {
       jobListing: input.jobListing, // Ensure jobListing is safe
       existingResume, // Ensure existingResume is safe (base64)
+
     };
 
     const response = await fetch(`${API_BASE_URL}/optimize-resume`, {
@@ -61,15 +62,16 @@ function fileToBase64(file: File): Promise<string> {
   });
 }
 
-export const convertToPDF = async (latexContent: string, userId: string): Promise<{ pdfUrl: string; defaultLatex: string }> => {
-  console.log('Sending LaTeX content for user:', userId, latexContent);
+export const convertToPDF = async (resumeContent: string, userId: string): Promise<{ pdfUrl: string; defaultLatex: string }> => {
+  console.log('Sending LaTeX content for user:', userId, resumeContent);
+  const template = "softwareDeveloper"
   try {
     const response = await fetch(`${API_BASE_URL}/compile`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ latexContent, userId }),
+      body: JSON.stringify({ resumeContent, userId, template }),
     });
 
     if (!response.ok) {
@@ -87,6 +89,7 @@ export const convertToPDF = async (latexContent: string, userId: string): Promis
     }
 
     const data = await response.json();
+    console.log(data)
     return data;
   } catch (error) {
     console.error('Error in convertToPDF:', error);

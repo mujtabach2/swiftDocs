@@ -8,7 +8,7 @@ import icl from "./images/icl.png";
 
 const companies = [harvard, uft, oxford, yale, icl];
 
-const Trusted = () => {
+const Trusted = ({ theme }) => {
   const [isLargeScreen, setIsLargeScreen] = useState(false);
 
   useEffect(() => {
@@ -24,16 +24,26 @@ const Trusted = () => {
 
   if (!isLargeScreen) return null; // Return nothing if the screen is small
 
+  // Define theme-specific styles
+  const bgColor = theme === "mytheme" ? "bg-white" : "bg-gray-900";
+  const textColor = theme === "mytheme" ? "text-gray-900" : "text-white";
+  const imageBgColor = theme === "mytheme" ? "bg-white" : "bg-gray-100";
+
   return (
-    <div className="py-2 pb-20 mb-20">
+    <div className={`w-[100vw] py-2 pb-40  ${bgColor}`}>
       <div className="flex justify-center items-center">
-        <h1 className="text-xl font-bold pb-4">Trusted by Students from</h1>
+        <h1 className={`text-xl font-bold pb-4 ${textColor}`}>Trusted by Students from</h1>
       </div>
       <div className="flex flex-col items-center">
         <div className="flex justify-center space-x-8 mb-[-20vh]">
           {companies.map((company, index) => (
-            <span key={index} className="px-4 py-2">
-              <Image src={company} alt={`Company ${index + 1}`} className="w-[30vw] h-auto" />
+            <span key={index} className={`px-4 py-2 ${imageBgColor} rounded-lg`}>
+              <Image 
+                src={company} 
+                alt={`Company ${index + 1}`} 
+                className="w-[30vw] h-auto"
+               
+              />
             </span>
           ))}
         </div>

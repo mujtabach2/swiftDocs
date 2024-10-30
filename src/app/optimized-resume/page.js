@@ -18,6 +18,11 @@ function SearchParamsWrapper() {
   const [pdfUrl, setPdfUrl] = useState("");
   const [isGenerating, setIsGenerating] = useState(false);
   const [user, setUser] = useState(null);
+  
+  // New states for stored HTML values
+  const [email, setEmail] = useState("No email available.");
+  const [coverLetter, setCoverLetter] = useState("No cover letter available.");
+  const [htmlContent, setHtmlContent] = useState("No additional content available.");
 
   useEffect(() => {
     const storedLatex = localStorage.getItem('optimizedLatex');
@@ -35,7 +40,14 @@ function SearchParamsWrapper() {
       console.error("Error decoding latex content:", error);
       setOptimizedLatex(latexTemplate); // Fallback to default template
     }
+
+    // Retrieve and set the stored HTML values from localStorage
+    setEmail(localStorage.getItem('email') || "");
+    setCoverLetter(localStorage.getItem('coverLetter') || "");
+    setHtmlContent(localStorage.getItem('htmlcon') || "");
+    
   }, [searchParams]);
+
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -68,15 +80,10 @@ function SearchParamsWrapper() {
 
   return (
     <div className="flex min-h-screen bg-gray-100">
-      {/* Sidebar */}
       <Sidebar user={user} />
-
-      {/* Main Content */}
       <main className="flex-1 p-6 overflow-y-auto">
         <div className="max-w-7xl text-center mx-auto">
           <h1 className="text-4xl font-bold text-gray-800 mb-8 animate-fade-in">Optimized Resume</h1>
-          
-          {/* Content Grid */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 h-[80vh]">
             {/* LaTeX Editor */}
             <div className="bg-white rounded-lg shadow-md p-6 transform transition duration-300 hover:shadow-lg animate-fade-in">
@@ -114,6 +121,38 @@ function SearchParamsWrapper() {
             </div>
           </div>
 
+          {/* New Section for Email, Cover Letter, and HTML Content */}
+          <div className="mt-8 bg-white rounded-lg shadow-md p-6 animate-fade-in">
+            <h2 className="text-2xl font-semibold mb-4 text-gray-700">Generated Content</h2>
+
+            {/* Display Email */}
+            <div className="mb-6">
+              <h3 className="text-lg font-bold mb-2">Email</h3>
+              <div
+                className="p-4 border rounded-lg bg-gray-50"
+                dangerouslySetInnerHTML={{ __html:email }}
+              />
+            </div>
+
+            {/* Display Cover Letter */}
+            <div className="mb-6">
+              <h3 className="text-lg font-bold mb-2">Cover Letter</h3>
+              <div
+                className="p-4 border rounded-lg bg-gray-50"
+                dangerouslySetInnerHTML={{ __html: coverLetter}}
+              />
+            </div>
+
+            {/* Display HTML Content */}
+            <div className="mb-6">
+              <h3 className="text-lg font-bold mb-2">HTML Content</h3>
+              <div
+                className="p-4 border rounded-lg bg-gray-50"
+                dangerouslySetInnerHTML={{ __html: htmlContent }}
+              />
+            </div>
+          </div>
+
           {/* Action Buttons */}
           <div className="mt-8 flex justify-center space-x-4">
             <button
@@ -147,10 +186,4 @@ function SearchParamsWrapper() {
   );
 }
 
-export default function OptimizedResumePage() {
-  return (
-    <Suspense fallback={<div className="flex items-center justify-center min-h-screen">Loading...</div>}>
-      <SearchParamsWrapper />
-    </Suspense>
-  );
-}
+export default SearchParamsWrapper;

@@ -66,9 +66,11 @@ export default function Home() {
     visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
   };
 
+  const bgColor = theme === "mytheme" ? "bg-white" : "bg-gray-900";
+
   return (
-    <div className={`flex flex-col min-h-screen ${theme ? theme : ""}`}>
-      <main className="flex-grow flex flex-col items-center  p-4 sm:p-8 md:p-16 lg:p-24">
+    <div className={`flex flex-col min-h-screen ${theme ? theme : "", bgColor} `} style={{bgColor}}>
+      <main className="flex-grow flex flex-col items-center  p-4 sm:p-8 md:p-16 lg:p-24 ">
         <Navbar handleThemeChange={toggleTheme} theme={theme} />
 
         {/* Sections with scroll-triggered animations */}
@@ -78,7 +80,7 @@ export default function Home() {
           animate={isMainInView ? "visible" : "hidden"}
           variants={fadeInVariant}
         >
-          <Main />
+          <Main theme={theme}/>
         </motion.div>
 
         <motion.div
@@ -87,7 +89,7 @@ export default function Home() {
           animate={isTrustedInView ? "visible" : "hidden"}
           variants={fadeInVariant}
         >
-          <Trusted />
+          <Trusted theme={theme} />
         </motion.div>
 
         <motion.div
@@ -99,9 +101,9 @@ export default function Home() {
           <ValueProp theme={theme} />
         </motion.div>
 
-        <ResumeSteps/>
+        <ResumeSteps theme={theme}/>
 
-          <Advantages />
+          <Advantages theme={theme}/>
        
         <motion.section
           ref={pricingRef}
@@ -113,14 +115,9 @@ export default function Home() {
           <Pricing theme={theme} />
         </motion.section>
 
-        <motion.div
-          ref={testimonialRef}
-          initial="hidden"
-          animate={isTestimonialInView ? "visible" : "hidden"}
-          variants={fadeInVariant}
-        >
+      
           <Testimonial theme={theme} />
-        </motion.div>
+        
 
         <motion.div
           ref={finalCTARef}
@@ -129,11 +126,12 @@ export default function Home() {
           variants={fadeInVariant}
         >
         
-          <FinalCTA />
+          <FinalCTA theme={theme}  />
           
         </motion.div>
         <section 
-  className="sm:py-24 bg-base-100 pb-[-10vh] mb-[-13vh] mt-[-20vh] relative w-[100vw] "
+  className={`sm:py-24 bg-base-100 pb-[-10vh] mb-[-13vh] mt-[-20vh] relative w-[100vw]  ${bgColor}`}
+  
 >
   <img 
     src="/left.svg" 
@@ -164,7 +162,7 @@ export default function Home() {
         <ChatModal isOpen={isChatOpen} onClose={() => setIsChatOpen(false)} />
       </main>
 
-      <Footer />
+      <Footer theme={theme} />
     </div>
   );
 }

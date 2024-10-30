@@ -109,12 +109,13 @@ export default function Pricing({ theme }) {
       transition: { delay: i * 0.3, duration: 0.6, ease: "easeOut" },
     }),
   };
-  
+  const bgGradient = theme === "mytheme" ? "bg-gradient-to-b from-blue-50 to-white" : "bg-gradient-to-b from-base-100 to-black";
+ 
 
   return (
     <div
       id="pricing"
-      className="flex flex-col p-4 gap-6 justify-center sm:flex-row sm:flex-wrap sm:justify-center pt-40"
+      className={`flex w-[100vw] ${bgGradient} flex-col p-4 gap-6 justify-center sm:flex-row sm:flex-wrap sm:justify-center items-center pt-40`}
     >
       <style jsx>{`
         .blue-to-green {

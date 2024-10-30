@@ -22,7 +22,7 @@ export default function Navbar({ handleThemeChange, theme}) {
 
   return (
     <>
-      <div className="navbar bg-base-100 fixed top-0 left-0 w-full z-50 pr-10">
+      <div className="navbar bg-base-100 fixed top-0 left-0 w-full z-50 pr-10 pb-0" style={{zindex:50}}>
         {/* Navbar links  if the screen is like a mobile then we turn it in to a hamburger*/}
         <div className="navbar-start">
           <div className="dropdown">
@@ -92,7 +92,7 @@ export default function Navbar({ handleThemeChange, theme}) {
 
         <div className="navbar-center">
           <div className="flex flex-row gap-1 items-center pl-10">
-            <Image src={logo} className=" h-[3rem] w-auto pb-2 pr-[-2vw]" />
+            <Image src={logo} className=" h-[3rem] w-auto  pr-[-2vw]" />
             <h1 className="font-bold text-white text-[3vh]">
               <span className={themeBool ? "text-white" : "text-black"}>
                 Swift

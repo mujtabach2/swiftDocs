@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-export default function Footer() {
+export default function Footer(theme) {
   const [activeModal, setActiveModal] = useState(null);
 
   const footerSections = [
@@ -87,24 +87,30 @@ export default function Footer() {
   const closeModal = () => {
     setActiveModal(null);
   };
-  
+
+
+  const bgColor = theme === "mytheme" ? "bg-blue-50" : "bg-gray-900";
+  const textColor = theme === "mytheme" ? "text-gray-900" : "text-white";
+  const linkColor = theme === "mytheme" ? "text-gray-700" : "text-gray-300";
+  const modalBg = theme === "mytheme" ? "bg-white" : "bg-gray-800";
+  const modalTextColor = theme === "mytheme" ? "text-gray-900" : "text-white";
+  const buttonBgColor = "bg-[#00FA9A]";
+  const buttonHoverBgColor = "hover:bg-[#00FA9A]/80";
+
   return (
-    <footer className="w-full p-10 pt-[5vh] bg-gray-300 text-base-content overflow-hidden ressd">
-         <style jsx>{`
-     
-     @media (max-width: 768px) {
-         .ressd {
-           margin-top: 50vh;
-         }
-           }
-
-
-    `}</style>
+    <footer className={`w-full p-20 mt-[1vh] pt-[3vh] ${bgColor} ${textColor} overflow-hidden ressd z-10`}>
+      <style jsx>{`
+        @media (max-width: 768px) {
+          .ressd {
+            margin-top: 19vh; 
+          }
+        }
+      `}</style>
       
       <div className="flex flex-wrap justify-between items-start max-w-screen-xl mx-auto space-y-6 lg:space-y-0 lg:space-x-8">
         <aside className="flex flex-col items-start w-full lg:w-auto">
           <div className="flex items-center justify-content space-x-2 mb-2">
-            <img src="/logo.png" className="h-10"/>
+            <img src="/logo.png" className="h-10" alt="SwiftDocs Logo"/>
             <span className="text-xl font-bold">SwiftDocs</span>
           </div>
           <p className="text-xl">
@@ -117,7 +123,7 @@ export default function Footer() {
             {section.links.map((link) => (
               <a
                 key={link}
-                className="block link-hover text-gray-700 cursor-pointer"
+                className={`block link-hover ${linkColor} cursor-pointer`}
                 onClick={() => handleLinkClick(link)}
               >
                 {link}
@@ -129,13 +135,13 @@ export default function Footer() {
 
       <input type="checkbox" id="my-modal" className="modal-toggle" checked={!!activeModal} onChange={closeModal} />
       <div className="modal">
-        <div className="modal-box">
+        <div className={`modal-box ${modalBg} ${modalTextColor}`}>
           <h3 className="font-bold text-lg">{activeModal}</h3>
           <div className="py-4">
             {activeModal && modalContent[activeModal]}
           </div>
           <div className="modal-action">
-            <label htmlFor="my-modal" className="btn" onClick={closeModal}>Close</label>
+            <label htmlFor="my-modal" className={`btn ${buttonBgColor} ${buttonHoverBgColor} text-black`} onClick={closeModal}>Close</label>
           </div>
         </div>
       </div>
