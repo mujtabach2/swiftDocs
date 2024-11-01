@@ -1,9 +1,21 @@
-const API_BASE_URL1 = 'https://latex-compiler-1067457245892.us-central1.run.app'; // Adjust this to your backend URL
-const API_BASE_URL = "http://localhost:8080"
+// ../lib/api.ts
+
+const API_BASE_URL = "http://localhost:8080"; // Ensure this points to your backend
+
 export interface ResumeOptimizationInput {
   existingResume: string | File;
   jobListing: string;
+  templateType: TemplateType; // Renamed to templateType for consistency
 }
+
+export type TemplateType = 'softwareDeveloper' | 'healthcare' | 'finance'; // Extend as needed
+
+export const templateToIndustryMap: Record<TemplateType, string> = {
+  softwareDeveloper: 'Software Development',
+  healthcare: 'Healthcare',
+  finance: 'Finance',
+  // Add more mappings if needed
+};
 
 export const optimizeResume = async (input: ResumeOptimizationInput): Promise<string> => {
   try {
@@ -18,7 +30,7 @@ export const optimizeResume = async (input: ResumeOptimizationInput): Promise<st
     const sanitizedInput = {
       jobListing: input.jobListing, // Ensure jobListing is safe
       existingResume, // Ensure existingResume is safe (base64)
-
+      industry: templateToIndustryMap[input.templateType], // Map templateType to industry
     };
 
     const response = await fetch(`${API_BASE_URL}/optimize-resume`, {
@@ -62,16 +74,16 @@ function fileToBase64(file: File): Promise<string> {
   });
 }
 
-export const convertToPDF = async (resumeContent: string, userId: string): Promise<{ pdfUrl: string; defaultLatex: string }> => {
+export const convertToPDF = async (resumeContent: string, userId: string, templateType: TemplateType): Promise<{ pdfUrl: string; defaultLatex: string }> => {
   console.log('Sending LaTeX content for user:', userId, resumeContent);
-  const template = "softwareDeveloper"
+
   try {
     const response = await fetch(`${API_BASE_URL}/compile`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ resumeContent, userId, template }),
+      body: JSON.stringify({ resumeContent, userId, templateType }), // Use templateType
     });
 
     if (!response.ok) {
@@ -93,6 +105,40 @@ export const convertToPDF = async (resumeContent: string, userId: string): Promi
     return data;
   } catch (error) {
     console.error('Error in convertToPDF:', error);
+    throw new Error('An error occurred while converting to PDF.'); // More generic error message
+  }
+};
+
+export const handleRegeneratePDF =  async (resumeContent: string, userId: string, templateType: TemplateType): Promise<{ pdfUrl: string }> => {
+  try {
+    console.log(resumeContent)
+    const response = await fetch(`${API_BASE_URL}/generatePdf`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ resumeContent, userId, templateType }), // Use templateType
+    });
+
+    if (!response.ok) {
+      let errorMessage = `Failed to convert to PDF: ${response.statusText}`;
+      try {
+        const errorData = await response.json();
+        if (errorData.message) {
+          errorMessage = `Failed to convert to PDF: ${errorData.message}`;
+        }
+      } catch (jsonError) {
+        // Response is not JSON
+        console.error('Non-JSON error response:', await response.text());
+      }
+      throw new Error(errorMessage);
+    }
+
+    const data = await response.json();
+    console.log(data)
+    return data;
+  } catch (error) {
+    console.error('Error in handleRegeneratePDF:', error); // Corrected error log
     throw new Error('An error occurred while converting to PDF.'); // More generic error message
   }
 };

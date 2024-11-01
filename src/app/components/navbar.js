@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import logo from "../../../public/logo.png"
 import Image from "next/image";
 import { scrollToPricing } from "../uils/scrollTo";
@@ -7,7 +7,23 @@ import supabase from "../config/supabaseClient";
 
 export default function Navbar({ handleThemeChange, theme}) {
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+  const [user,setUser] = useState(false)
+  useEffect(() => {
+    const fetchUserAndResume = async () => {
+      try {
+        const { data: { user: currentUser }, error: userError } = await supabase.auth.getUser();
+        if (userError) throw userError;
+        
+        console.log("Current user from auth:", currentUser);
+        setUser(currentUser);
 
+      } catch (error) {
+        console.error("Error fetching user or resume:", error);
+      }
+    };
+
+    fetchUserAndResume();
+  }, []);
   
 
   const themeBool = theme === "synthwave";
@@ -102,6 +118,15 @@ export default function Navbar({ handleThemeChange, theme}) {
           </div>
         </div>
 
+      {user ?(
+        <div className="navbar-end">
+          
+            <a href="/optimize" className="btn btn-ghost mr-2">
+              Optimize Now
+            </a>
+       
+        </div>
+      ) : (
         <div className="navbar-end">
           
             <a href="/login" className="btn btn-ghost mr-2">
@@ -109,6 +134,8 @@ export default function Navbar({ handleThemeChange, theme}) {
             </a>
        
         </div>
+      )
+    }
       </div>
     </>
   ); 

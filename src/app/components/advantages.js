@@ -7,6 +7,7 @@ import {
   ClockIcon,
   LightBulbIcon,
   ShieldCheckIcon,
+  EnvelopeIcon
 } from "@heroicons/react/24/outline";
 
 const features = [
@@ -15,12 +16,14 @@ const features = [
     description:
       "Our advanced AI algorithms analyze your resume and provide tailored suggestions to highlight your strengths and match industry standards.",
     icon: BeakerIcon,
+    
   },
   {
     title: "Industry-specific templates",
     description:
       "Choose from a variety of professionally designed templates tailored to your specific industry and job role.",
     icon: DocumentTextIcon,
+  
   },
   {
     title: "ATS-friendly formatting",
@@ -41,10 +44,10 @@ const features = [
     icon: LightBulbIcon,
   },
   {
-    title: "Privacy and security",
+    title: "Cover Letters & Follow-Up Emails",
     description:
-      "Your data is protected with industry-standard encryption. We never share or sell your personal information.",
-    icon: ShieldCheckIcon,
+      "Generate tailored cover letters and follow-up emails that align with your resume and target job, making a strong impression every step of the way.",
+    icon: EnvelopeIcon,
   },
 ];
 

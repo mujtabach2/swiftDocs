@@ -213,7 +213,8 @@ function Sidebar() {
 
       {/* Sidebar */}
       <div
-  className={`fixed inset-y-0 left-0 transform ${
+     
+  className={`fixed height-full top-0 left-0 transform ${
     isOpen ? 'translate-x-0' : '-translate-x-full'
   } md:translate-x-0 md:static md:inset-auto transition-transform duration-300 ease-in-out z-50 w-64 bg-gradient-to-b from-gray-800 to-gray-900 text-white flex flex-col p-6 shadow-lg`}
 >
@@ -241,7 +242,7 @@ function Sidebar() {
           <ul className="space-y-3">
             <li>
               <a
-                href="#home"
+                href="/optimize"
                 className="flex items-center p-2 rounded-md hover:bg-gray-700 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500"
               >
                 <FaHome className="text-lg mr-3" aria-hidden="true" />

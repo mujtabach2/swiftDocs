@@ -45,6 +45,7 @@ export default function Login() {
 
         <Auth
           supabaseClient={supabase}
+          redirectTo={`${window.location.origin}/optimize`}
           appearance={{
             theme: customTheme, // Add custom theme
             extend: true, // Extend default styles

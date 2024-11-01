@@ -44,7 +44,7 @@ export default function Home() {
   const isFinalCTAInView = useInView(finalCTARef);
 
   useEffect(() => {
-    if (!loading && user) {
+    if (user) {
       router.push("/optimize");
     }
   }, [loading, user, router]);
